@@ -8,7 +8,7 @@
 \documentclass[letterpaper,11pt]{article}
 
 \usepackage{latexsym}
-\usepackage[empty]{fullpage}
+\usepackage[top=0.5in, bottom=0.5in, left=0.5in, right=0.5in]{geometry}
 \usepackage{titlesec}
 \usepackage{marvosym}
 \usepackage[usenames,dvipsnames]{color}
@@ -39,13 +39,6 @@
 \renewcommand{\headrulewidth}{0pt}
 \renewcommand{\footrulewidth}{0pt}
 
-% Adjust margins
-\addtolength{\oddsidemargin}{-0.5in}
-\addtolength{\evensidemargin}{-0.5in}
-\addtolength{\textwidth}{1in}
-\addtolength{\topmargin}{-.5in}
-\addtolength{\textheight}{1.0in}
-
 \urlstyle{same}
 
 \raggedbottom
@@ -54,13 +47,13 @@
 
 % Sections formatting
 \titleformat{\section}{
-  \vspace{-4pt}\scshape\raggedright\large
-}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+  \vspace{-2pt}\scshape\raggedright\large
+}{}{0em}{}[\color{black}\titlerule \vspace{-3pt}]
 
 % Ensure that generate pdf is machine readable/ATS parsable
 \pdfgentounicode=1
 
-%-------------------------
+{% raw %}%-------------------------
 % Custom commands
 \newcommand{\resumeItem}[1]{
   \item\small{
@@ -69,11 +62,11 @@
 }
 
 \newcommand{\resumeSubheading}[4]{
-  \vspace{-2pt}\item
+  \vspace{-1pt}\item
     \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
       \textbf{#1} & #2 \\
       \textit{\small#3} & \textit{\small #4} \\
-    \end{tabular*}\vspace{-7pt}
+    \end{tabular*}\vspace{-5pt}
 }
 
 \newcommand{\resumeSubSubheading}[2]{
@@ -97,7 +90,7 @@
 \newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.15in, label={}]}
 \newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
 \newcommand{\resumeItemListStart}{\begin{itemize}}
-\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-3pt}}{% endraw %}
 
 %-------------------------------------------
 %%%%%%  RESUME STARTS HERE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -107,73 +100,73 @@
 
 %----------HEADING----------
 \begin{center}
-    \textbf{\Huge \scshape {{ personal_info.name }}} \\ \vspace{1pt}
-    \small {{ personal_info.phone }} $|$ \href{mailto:{{ personal_info.email }}}{\underline{{ "{{" }} {{ personal_info.email }} {{ "}}" }}}{%- if personal_info.linkedin %} $|$
-    \href{https://{{ personal_info.linkedin }}}{\underline{{ "{{" }} {{ personal_info.linkedin }} {{ "}}" }}}{%- endif %}{%- if personal_info.github %} $|$
-    \href{https://{{ personal_info.github }}}{\underline{{ "{{" }} {{ personal_info.github }} {{ "}}" }}}{%- endif %}
+    \textbf{\Huge \scshape {{ personal_info.name|latex_escape }}} \\ \vspace{1pt}
+    \small {{ personal_info.phone|latex_escape }} $|$ \href{mailto:{{ personal_info.email }}}{\underline{ {{- personal_info.email -}} }}{%- if personal_info.linkedin %} $|$
+    \href{https://{{ personal_info.linkedin }}}{\underline{ {{- personal_info.linkedin -}} }}{%- endif %}{%- if personal_info.github %} $|$
+    \href{https://{{ personal_info.github }}}{\underline{ {{- personal_info.github -}} }}{%- endif %}
 \end{center}
-
-
-%-----------EDUCATION-----------
-\section{Education}
-  \resumeSubHeadingListStart
-{%- for edu in education %}
-    \resumeSubheading
-      {{ "{" }}{{ edu.institution }}{{ "}" }}{{ "{" }}{{ edu.location }}{{ "}" }}
-      {{ "{" }}{{ edu.degree }}{% if edu.gpa %}, GPA: {{ edu.gpa }}{% endif %}{{ "}" }}{{ "{" }}{{ edu.dates }}{{ "}" }}
-{%- if edu.additional_info %}
-      \resumeItemListStart
-{%- for info in edu.additional_info %}
-        \resumeItem{{ "{" }}{{ info }}{{ "}" }}
-{%- endfor %}
-      \resumeItemListEnd
-{%- endif %}
-{%- endfor %}
-  \resumeSubHeadingListEnd
 
 
 %-----------EXPERIENCE-----------
 \section{Experience}
   \resumeSubHeadingListStart
 
-{%- for exp in experience %}
+{% for exp in experience %}
     \resumeSubheading
-      {{ "{" }}{{ exp.title }}{{ "}" }}{{ "{" }}{{ exp.dates }}{{ "}" }}
-      {{ "{" }}{{ exp.company }}{{ "}" }}{{ "{" }}{{ exp.location }}{{ "}" }}
+      {{ "{" }}{{ exp.title|latex_escape }}{{ "}" }}{{ "{" }}{{ exp.dates|latex_escape }}{{ "}" }}
+      {{ "{" }}{{ exp.company|latex_escape }}{{ "}" }}{{ "{" }}{{ exp.location|latex_escape }}{{ "}" }}
       \resumeItemListStart
-{%- for bullet in exp.bullets %}
-        \resumeItem{{ "{" }}{{ bullet }}{{ "}" }}
-{%- endfor %}
+{% for bullet in exp.bullets %}
+        \resumeItem{{ "{" }}{{ bullet|latex_escape }}{{ "}" }}
+{% endfor %}
       \resumeItemListEnd
 
-{%- endfor %}
+{% endfor %}
   \resumeSubHeadingListEnd
 
 
-{%- if projects %}
+{% if projects %}
 %-----------PROJECTS-----------
 \section{Projects}
     \resumeSubHeadingListStart
-{%- for project in projects %}
+{% for project in projects %}
       \resumeProjectHeading
-          {{ "{" }}\textbf{{ "{" }}{{ project.name }}{{ "}" }} $|$ \emph{{ "{" }}{{ project.technologies }}{{ "}" }}{{ "}" }}{{ "{" }}{{ project.date }}{{ "}" }}
+          {{ "{" }}\textbf{{ "{" }}{{ project.name|latex_escape }}{{ "}" }} $|$ \emph{{ "{" }}{{ project.technologies|latex_escape }}{{ "}" }}{{ "}" }}{{ "{" }}{{ project.date|latex_escape }}{{ "}" }}
           \resumeItemListStart
-{%- for bullet in project.bullets %}
-            \resumeItem{{ "{" }}{{ bullet }}{{ "}" }}
-{%- endfor %}
+{% for bullet in project.bullets %}
+            \resumeItem{{ "{" }}{{ bullet|latex_escape }}{{ "}" }}
+{% endfor %}
           \resumeItemListEnd
-{%- endfor %}
+{% endfor %}
     \resumeSubHeadingListEnd
-{%- endif %}
+{% endif %}
+
+
+%-----------EDUCATION-----------
+\section{Education}
+  \resumeSubHeadingListStart
+{% for edu in education %}
+    \resumeSubheading
+      {{ "{" }}{{ edu.institution|latex_escape }}{{ "}" }}{{ "{" }}{{ edu.location|latex_escape }}{{ "}" }}
+      {{ "{" }}{{ edu.degree|latex_escape }}{% if edu.gpa %}, GPA: {{ edu.gpa }}{% endif %}{{ "}" }}{{ "{" }}{{ edu.dates|latex_escape }}{{ "}" }}
+{% if edu.additional_info %}
+      \resumeItemListStart
+{% for info in edu.additional_info %}
+        \resumeItem{{ "{" }}{{ info|latex_escape }}{{ "}" }}
+{% endfor %}
+      \resumeItemListEnd
+{% endif %}
+{% endfor %}
+  \resumeSubHeadingListEnd
 
 
 %-----------PROGRAMMING SKILLS-----------
 \section{Technical Skills}
  \begin{itemize}[leftmargin=0.15in, label={}]
     \small{\item{
-{%- for category, skill_list in skills.items() %}
-     \textbf{{ "{" }}{{ category|title }}{{ "}" }}{{ "{" }}: {{ skill_list|join(', ') }}{{ "}" }}{% if not loop.last %} \\{% endif %}
-{%- endfor %}
+{% for category, skill_list in skills.items() %}
+     \textbf{{ "{" }}{{ category|latex_escape }}{{ "}" }}{{ "{" }}: {{ skill_list|map('latex_escape')|join(', ') }}{{ "}" }}{% if not loop.last %} \\{% endif %}
+{% endfor %}
     }}
  \end{itemize}
 

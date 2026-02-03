@@ -1,4 +1,5 @@
 """LaTeX template rendering and PDF compilation service."""
+import re
 import subprocess
 from pathlib import Path
 from typing import Optional
@@ -38,6 +39,135 @@ class LaTeXService:
             lstrip_blocks=True,
             autoescape=False  # LaTeX has its own escaping rules
         )
+
+        # Add custom LaTeX escape filter
+        self.env.filters['latex_escape'] = self._latex_escape
+
+    @staticmethod
+    def _latex_escape(text: str) -> str:
+        """
+        Escape special LaTeX characters in text while preserving valid LaTeX commands.
+
+        Args:
+            text: Text to escape
+
+        Returns:
+            LaTeX-safe text
+        """
+        if not isinstance(text, str):
+            return text
+
+        # Step 1: Protect valid LaTeX commands by temporarily replacing them
+        # This includes \textbf{...}, \textit{...}, etc.
+        # But first, we need to escape special chars inside the commands
+
+        # Find and temporarily replace LaTeX commands
+        latex_commands = []
+        # Use a placeholder with only alphanumeric chars that won't be affected by escaping
+        # Format: XLATEXPROTECTX followed by index followed by XLATEXPROTECTX
+        def get_placeholder(idx):
+            return f"XLATEXPROTECTX{idx}XLATEXPROTECTX"
+
+        # Pattern to match \textbf{...}, \textit{...}, etc. with optional space before brace
+        # This handles both \textbf{text} and \textbf {text}
+        latex_cmd_pattern = r'(\\text(?:bf|it|tt|sc|sl|em))\s*\{([^}]*)\}'
+
+        def protect_command(match):
+            idx = len(latex_commands)
+            cmd_name = match.group(1)  # e.g., \textbf
+            content = match.group(2)    # e.g., ≈25%
+
+            # First, handle Unicode characters in the content
+            unicode_replacements = {
+                '≈': r'$\approx$',
+                '±': r'$\pm$',
+                '×': r'$\times$',
+                '÷': r'$\div$',
+                '≤': r'$\leq$',
+                '≥': r'$\geq$',
+                '≠': r'$\neq$',
+                '→': r'$\rightarrow$',
+                '←': r'$\leftarrow$',
+                '−': r'$-$',
+                '–': r'--',
+                '—': r'---',
+                '"': r'``',
+                '"': r"''",
+                ''': r'`',
+                ''': r"'",
+                '…': r'\ldots{}',
+            }
+            for char, replacement in unicode_replacements.items():
+                content = content.replace(char, replacement)
+
+            # Then escape special LaTeX characters in the content
+            # Note: We skip '$' because Unicode replacements use it for math mode
+            # Also, we need to be careful not to double-escape already escaped characters
+            replacements_dict = {
+                '%': r'\%',
+                '&': r'\&',
+                '#': r'\#',
+                '_': r'\_'
+            }
+            for char, escaped in replacements_dict.items():
+                # Only replace if not already escaped
+                content = content.replace(char, escaped)
+
+            # Reconstruct the command with escaped content
+            # Use string concatenation to avoid any f-string escape issues
+            cmd = cmd_name + '{' + content + '}'
+            latex_commands.append(cmd)
+            return get_placeholder(idx)
+
+        text = re.sub(latex_cmd_pattern, protect_command, text)
+
+        # Step 2: Handle common Unicode characters first (before escaping special chars)
+        unicode_replacements = {
+            '≈': r'$\approx$',  # Approximately equal
+            '±': r'$\pm$',      # Plus-minus
+            '×': r'$\times$',   # Multiplication
+            '÷': r'$\div$',     # Division
+            '≤': r'$\leq$',     # Less than or equal
+            '≥': r'$\geq$',     # Greater than or equal
+            '≠': r'$\neq$',     # Not equal
+            '→': r'$\rightarrow$',  # Right arrow
+            '←': r'$\leftarrow$',   # Left arrow
+            '−': r'$-$',        # Minus sign (different from hyphen)
+            '–': r'--',         # En dash
+            '—': r'---',        # Em dash
+            '"': r'``',         # Left double quote
+            '"': r"''",         # Right double quote
+            ''': r'`',          # Left single quote
+            ''': r"'",          # Right single quote
+            '…': r'\ldots{}',   # Ellipsis
+        }
+
+        for char, replacement in unicode_replacements.items():
+            text = text.replace(char, replacement)
+
+        # Step 3: Escape special LaTeX characters
+        replacements = {
+            '\\': r'\textbackslash{}',
+            '%': r'\%',
+            '$': r'\$',
+            '&': r'\&',
+            '#': r'\#',
+            '_': r'\_',
+            '{': r'\{',
+            '}': r'\}',
+            '~': r'\textasciitilde{}',
+            '^': r'\textasciicircum{}',
+        }
+
+        # Apply replacements (backslash must be first)
+        for char, replacement in replacements.items():
+            text = text.replace(char, replacement)
+
+        # Step 4: Restore protected LaTeX commands
+        for idx, cmd in enumerate(latex_commands):
+            text = text.replace(get_placeholder(idx), cmd)
+
+        return text
 
     def check_latex_installed(self) -> bool:
         """Check if pdflatex is installed and available."""

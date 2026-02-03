@@ -113,8 +113,8 @@ def tailor(job_description, output, no_optimize, preview):
             tailored_data = claude_service.tailor_resume(
                 resume_data,
                 jd_text,
-                max_bullets_per_job=3,
-                max_projects=3
+                max_bullets_per_job=6,
+                max_projects=2
             )
             click.echo(click.style("  ✓ Resume tailored successfully!", fg="green"))
         except ClaudeAPIError as e:

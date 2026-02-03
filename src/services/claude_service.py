@@ -39,20 +39,33 @@ Instructions:
    - Prioritizing projects that demonstrate relevant technologies
    - Adjusting technical skills order to highlight most relevant ones
    - Using keywords from the job description naturally (no keyword stuffing)
+   - BOLD key technical terms using LaTeX \\textbf{{}} syntax - you MUST use TWO backslashes
+   - CRITICAL: Write \\textbf NOT \textbf (single backslash \t will break as tab character)
+   - Bold: technologies, frameworks, metrics, important verbs
+   - Example: "Built \\textbf{{Spring Boot}} microservices serving \\textbf{{200K+ users}}"
+   - For percents in bold: \\textbf{{25%}} - note the TWO backslashes before textbf
 
 3. Critical constraints:
    - NEVER fabricate or exaggerate information
    - Maintain all factual details (dates, companies, degrees, etc.)
    - Keep the same overall structure
+   - Include ALL work experiences from the original resume (do not remove any)
    - Each experience entry should have {max_bullets_per_job} bullet points maximum
    - Include maximum {max_projects} projects (prioritize most relevant)
-   - Each bullet point should be concise (under 120 characters if possible)
-   - Use strong action verbs and quantify achievements when available
+   - Each bullet point MUST be a single line (aim for 90-110 characters max)
+   - Pack maximum information into each bullet - be dense and precise, not verbose
+   - Use XYZ format: "Accomplished [X] as measured by [Y] by doing [Z]"
+   - Start with action verb, include specific metric, explain method
+   - Example: "Reduced API latency 40% (Y) by optimizing database queries (Z)"
+   - Use strong action verbs and quantify ALL achievements with specific metrics
+   - Eliminate filler words - every word should add value
 
 4. Optimization for 1-page format:
-   - Be concise while maintaining impact
-   - Focus on quality over quantity of bullet points
-   - Remove or shorten less relevant details
+   - Write CONCISE single-line bullets to maximize information density
+   - Use shorter phrasing but preserve ALL key details and metrics
+   - Recent positions (2024-2025) should have more bullets showing depth of experience
+   - Compress sentences: "Built X that achieved Y" not "Responsible for building X which resulted in Y"
+   - Keep all quantified achievements - numbers are critical
 
 5. Return format:
    - Return ONLY a valid JSON object matching the exact structure of the input
@@ -198,17 +211,22 @@ Current Resume Data (in JSON format):
 Instructions:
 1. Reduce the content while preserving the most impactful information
 2. Strategies to use (in order of preference):
-   - Remove least impactful projects (keep top 2-3 most impressive)
-   - Reduce bullet points per job (aim for 2-3 per position)
-   - Shorten verbose bullet points while keeping key achievements
+   - Compress bullets to single lines (90-110 chars max) using XYZ format without losing metrics
+   - Use XYZ format: "Accomplished [X] as measured by [Y] by doing [Z]"
+   - Remove least impactful projects (keep top 2 most impressive)
+   - Reduce bullet points for OLDER positions only (keep 4-6 bullets for recent roles)
+   - Eliminate redundant words while preserving all specific achievements and numbers
    - Consolidate similar skills in the skills section
-   - For older/less relevant positions, keep fewer details
+   - For positions before 2023, keep fewer details
 
 3. Maintain:
    - All factual accuracy
    - Most impressive achievements and quantified results
    - Recent and relevant experience in full detail
    - Overall structure and formatting
+   - BOLD key terms using \\textbf{{}} - MUST use TWO backslashes (single \t becomes tab!)
+   - Bold technologies, frameworks, metrics, keywords
+   - Example: \\textbf{{MongoDB}} or \\textbf{{25%}} - always TWO backslashes
 
 4. Return ONLY valid JSON matching the input structure.
 

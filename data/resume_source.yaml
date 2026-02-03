@@ -93,7 +93,7 @@ projects:
 
 # Technical Skills (organized by category)
 skills:
-  languages: ["Java", "Python", "C++", "JavaScript", "SQL", "Rust"]
-  backend_infra: ["Spring Boot", "REST APIs", "Node.js", "Redis", "Kafka", "PostgreSQL", "MongoDB", "MySQL", "Snowflake", "Docker", "Kubernetes", "Jenkins", "Terraform", "AWS (KMS)", "Google Cloud Platform (GCP)", "CI/CD", "Datadog"]
-  web_tools: ["React", "React Native", "HTML/CSS", "Git", "VS Code", "Agile/Scrum", "Figma"]
-  data_ml_ai: ["OpenAI", "Anthropic", "BERT", "TF-IDF", "TensorFlow", "scikit-learn", "Matplotlib", "Jupyter Notebooks", "Data Structures & Algorithms", "Object-Oriented Programming"]
+  Languages: ["Java", "Python", "C++", "JavaScript", "SQL", "Rust"]
+  Backend / Infra: ["Spring Boot", "REST APIs", "Node.js", "Redis", "Kafka", "PostgreSQL", "MongoDB", "MySQL", "Snowflake", "Docker", "Kubernetes", "Jenkins", "Terraform", "AWS (KMS)", "Google Cloud Platform (GCP)", "CI/CD", "Datadog"]
+  Web / Tools: ["React", "React Native", "HTML/CSS", "Git", "VS Code", "Agile/Scrum", "Figma"]
+  Data / ML / AI: ["OpenAI", "Anthropic", "BERT", "TF-IDF", "TensorFlow", "scikit-learn", "Matplotlib", "Jupyter Notebooks", "Data Structures & Algorithms", "Object-Oriented Programming"]
