@@ -28,24 +28,40 @@ Current Resume Data (in JSON format):
 
 Instructions:
 1. Carefully analyze the job description for:
-   - Required skills and technologies
+   - Required skills and technologies (list EVERY technology mentioned)
    - Key responsibilities and qualifications
-   - Important keywords for ATS systems
+   - Important keywords for ATS systems (tools, frameworks, methodologies)
    - Company values and culture indicators
+   - Domain-specific terminology and jargon
+   - Soft skills and competencies mentioned
 
 2. Tailor the resume by:
+   - CRITICAL: Incorporate as many JD keywords as possible while maintaining truthfulness
+   - If a technology/skill from JD matches resume experience, MUST include that exact term
    - Reordering experience bullets to highlight most relevant achievements first
    - Rewriting bullet points to emphasize matching skills and experiences
-   - Prioritizing projects that demonstrate relevant technologies
-   - Adjusting technical skills order to highlight most relevant ones
-   - Using keywords from the job description naturally (no keyword stuffing)
-   - BOLD key technical terms using LaTeX \\textbf{{}} syntax - you MUST use TWO backslashes
+   - Prioritizing projects that demonstrate relevant technologies from JD
+   - Adjusting technical skills order to highlight JD-relevant ones FIRST
+   - Add JD technologies to bullets where genuinely applicable
+   - Mirror JD terminology: if JD says "microservices", use "microservices" not "distributed systems"
+   - For each bullet, aim to include 2-3 keywords from JD naturally
+   - BOLD ALL keywords that match JD using LaTeX \\textbf{{}} syntax - you MUST use TWO backslashes
    - CRITICAL: Write \\textbf NOT \textbf (single backslash \t will break as tab character)
-   - Bold: technologies, frameworks, metrics, important verbs
-   - Example: "Built \\textbf{{Spring Boot}} microservices serving \\textbf{{200K+ users}}"
+   - Bold: technologies, frameworks, metrics, important verbs, domain terms
+   - Example: "Built \\textbf{{Spring Boot}} \\textbf{{microservices}} with \\textbf{{Redis}} caching serving \\textbf{{200K+ users}}"
    - For percents in bold: \\textbf{{25%}} - note the TWO backslashes before textbf
+   - Maximize keyword density without fabricating experience
 
-3. Critical constraints:
+3. Keyword Strategy:
+   - Extract ALL technical keywords from JD: languages, frameworks, tools, methodologies
+   - Map each JD keyword to resume content where genuinely applicable
+   - In Technical Skills: reorder to put JD-matching skills FIRST, add any missing but truthful skills
+   - In bullets: weave in JD keywords naturally - if you used a tool, name it explicitly
+   - Use exact JD phrasing: if JD says "CI/CD pipelines" use that, not just "CI/CD"
+   - Bold EVERY keyword that matches between resume and JD
+   - Aim for 70-90% keyword coverage from JD in final resume
+
+4. Critical constraints:
    - NEVER fabricate or exaggerate information
    - Maintain all factual details (dates, companies, degrees, etc.)
    - Keep the same overall structure
@@ -56,18 +72,18 @@ Instructions:
    - Pack maximum information into each bullet - be dense and precise, not verbose
    - Use XYZ format: "Accomplished [X] as measured by [Y] by doing [Z]"
    - Start with action verb, include specific metric, explain method
-   - Example: "Reduced API latency 40% (Y) by optimizing database queries (Z)"
+   - Example: "Reduced \\textbf{{API}} latency \\textbf{{40%}} by optimizing \\textbf{{database queries}} with \\textbf{{indexing}}"
    - Use strong action verbs and quantify ALL achievements with specific metrics
    - Eliminate filler words - every word should add value
 
-4. Optimization for 1-page format:
+5. Optimization for 1-page format:
    - Write CONCISE single-line bullets to maximize information density
-   - Use shorter phrasing but preserve ALL key details and metrics
+   - Use shorter phrasing but preserve ALL key details, metrics, AND keywords
    - Recent positions (2024-2025) should have more bullets showing depth of experience
    - Compress sentences: "Built X that achieved Y" not "Responsible for building X which resulted in Y"
-   - Keep all quantified achievements - numbers are critical
+   - Keep all quantified achievements AND technical keywords - both are critical for ATS
 
-5. Return format:
+6. Return format:
    - Return ONLY a valid JSON object matching the exact structure of the input
    - Do not include any explanation or commentary
    - Ensure all required fields are present
@@ -224,9 +240,11 @@ Instructions:
    - Most impressive achievements and quantified results
    - Recent and relevant experience in full detail
    - Overall structure and formatting
-   - BOLD key terms using \\textbf{{}} - MUST use TWO backslashes (single \t becomes tab!)
-   - Bold technologies, frameworks, metrics, keywords
+   - ALL keywords and technical terms - never remove technologies/tools mentioned
+   - BOLD ALL key terms using \\textbf{{}} - MUST use TWO backslashes (single \t becomes tab!)
+   - Bold technologies, frameworks, metrics, keywords, domain terms
    - Example: \\textbf{{MongoDB}} or \\textbf{{25%}} - always TWO backslashes
+   - Compress wording but preserve every technical keyword
 
 4. Return ONLY valid JSON matching the input structure.
 
