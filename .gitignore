@@ -57,3 +57,7 @@ output/pdfs/*.pdf
 .pytest_cache/
 .coverage
 htmlcov/
+
+# Local configuration with secrets
+.env.local
+config.local.yaml

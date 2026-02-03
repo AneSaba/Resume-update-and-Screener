@@ -44,7 +44,7 @@ class Settings(BaseSettings):
         return self.data_dir / "resume_source.yaml"
 
     model_config = SettingsConfigDict(
-        env_file=".env",
+        env_file=(".env.local", ".env"),  # Try .env.local first, then .env
         env_file_encoding="utf-8",
         case_sensitive=False,
         extra="ignore"
