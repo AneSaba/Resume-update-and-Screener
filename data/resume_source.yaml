@@ -1,0 +1,99 @@
+# Resume Source Data for Aneesh Saba
+# This is your "master resume" - the tool will tailor it based on job descriptions
+
+personal_info:
+  name: "Aneesh Saba"
+  email: "aneeshsaba@ucla.edu"
+  phone: "(408) 609-2825"
+  linkedin: "linkedin.com/in/aneesh-saba"
+  github: "github.com/AneSaba"
+
+# Education (most recent first)
+education:
+  - institution: "University of California, Los Angeles (UCLA)"
+    location: "Los Angeles, CA"
+    degree: "Bachelor of Science in Computer Science"
+    dates: "Sep 2022 - Dec 2024"
+    # gpa: "3.21"  # Uncomment if you want to include GPA
+
+# Work Experience (most recent first)
+experience:
+  - title: "Software Engineer (Backend)"
+    company: "ZoomInfo"
+    location: "Remote / CA"
+    dates: "Jan 2025 - Present"
+    bullets:
+      - "Build and maintain backend for Workbook, a multi-tenant analytics platform for enrichment, formulas, automation"
+      - "Optimized MongoDB indexes and Spring Boot queries, improving latency 3× at peak traffic for 200K+ users"
+      - "Integrated AI Data Agents into backend workflows to auto-generate workbook formulas, cutting setup 70%"
+      - "Streamlined execution paths to eliminate scans, reducing p95 latency 30% across workloads during syncing"
+      - "Expanded Datadog instrumentation to improve root-cause visibility, cutting incident resolution time 40%"
+      - "Enforced isolation with quota and access controls, protecting 15K+ enterprise customers from cross-tenant risk"
+      - "Added Redis tiered caching and optimized MongoDB read routing, lowering peak-load latency 25%"
+
+  - title: "Software Engineer Intern (Data Science)"
+    company: "ZoomInfo"
+    location: "Remote / CA"
+    dates: "Jun 2024 - Aug 2024"
+    bullets:
+      - "Built Snowflake pipelines in Python/Jupyter to automate analytics workflows, reducing turnaround time 20%"
+      - "Trained OpenAI, Anthropic, and BERT/TF-IDF models for skill classification, improving tagging accuracy 25%"
+      - "Automated schema drift detection and data quality checks, reducing manual QA effort 30%"
+      - "Delivered model improvements that cut manual label review time for internal analysts ≈35%"
+
+  - title: "Software Engineer Intern (Backend)"
+    company: "PaloAlto Soft"
+    location: "Palo Alto, CA"
+    dates: "Sep 2023 - Jun 2024"
+    bullets:
+      - "Implemented AWS KMS row-level encryption in REST APIs to secure multi-tenant PII and maintain compliance"
+      - "Reduced API latency 20% under 500 req/s by optimizing PostgreSQL execution plans and indexing"
+      - "Integrated Jenkins CI/CD with rollback checks, cutting deployment time 2× and improving release reliability"
+      - "Refactored authentication middleware, cutting onboarding time for new services ≈40%"
+
+  - title: "Software Engineer Intern (Full Stack)"
+    company: "Appliqué"
+    location: "Remote / CA"
+    dates: "Jun 2023 - Sep 2023"
+    bullets:
+      - "Built React/Node.js accessibility components meeting WCAG 2.1, deployed across 1K+ production sites"
+      - "Improved UI responsiveness 15% by profiling component re-renders and optimizing state update granularity"
+      - "Added frontend telemetry instrumentation to surface layout shift and network bottleneck patterns"
+      - "Accessibility widgets contributed to an estimated ≈18% increase in checkout completion for early pilot stores"
+
+  - title: "Software Engineer Intern (Full Stack)"
+    company: "Heroic Robots"
+    location: "Remote / CA"
+    dates: "Jan 2023 - Jun 2023"
+    bullets:
+      - "Developed C++ Unreal Engine training modules for a WHO-backed medical simulation platform"
+      - "Improved frame stability 25% by tuning asset streaming, shader cost, and GPU scheduling"
+      - "Re-architected UI rendering layers to standardize components across desktop and VR build targets"
+      - "Modules deployed to medical training environments across ≈12 countries"
+
+# Projects (most impressive first)
+projects:
+  - name: "Skill Swipe"
+    technologies: "React Native, Node.js, MongoDB, iOS/Android"
+    date: "Jan 2022 - Mar 2022"
+    bullets:
+      - "Built cross-platform job-matching app with real-time MongoDB sync and swipe-based evaluation"
+      - "Collaborated as team of five to develop from scratch with UI designs, frontend and backend"
+      - "Designed and implemented all UI components for user/business slides using Figma and JavaScript"
+      - "Optimized app performance in VS Code by increasing speed in simulation"
+
+  - name: "Cyber Survival Guide"
+    technologies: "HTML, CSS, JavaScript"
+    date: "Mar 2022"
+    bullets:
+      - "Developed accessibility-first cybersecurity learning platform with interactive UI patterns and animations"
+      - "Collaborated in team of four to design and code website using HTML/CSS and JavaScript on Glitch"
+      - "Implemented visible Lanterns buttons using JavaScript to reflect Lantern theme"
+      - "Constructed with banner, short description, and three interactable Lanterns revealing cyber safety info"
+
+# Technical Skills (organized by category)
+skills:
+  languages: ["Java", "Python", "C++", "JavaScript", "SQL", "Rust"]
+  backend_infra: ["Spring Boot", "REST APIs", "Node.js", "Redis", "Kafka", "PostgreSQL", "MongoDB", "MySQL", "Snowflake", "Docker", "Kubernetes", "Jenkins", "Terraform", "AWS (KMS)", "Google Cloud Platform (GCP)", "CI/CD", "Datadog"]
+  web_tools: ["React", "React Native", "HTML/CSS", "Git", "VS Code", "Agile/Scrum", "Figma"]
+  data_ml_ai: ["OpenAI", "Anthropic", "BERT", "TF-IDF", "TensorFlow", "scikit-learn", "Matplotlib", "Jupyter Notebooks", "Data Structures & Algorithms", "Object-Oriented Programming"]
