@@ -83,6 +83,13 @@ pip install -r requirements.txt
 
 ### 4. Configure Environment Variables
 
+**Option A: Quick Setup (Recommended)**
+```bash
+./setup.sh
+```
+This script will create `.env` and set up the virtual environment.
+
+**Option B: Manual Setup**
 ```bash
 cp .env.example .env
 ```
@@ -93,6 +100,16 @@ ANTHROPIC_API_KEY=your_actual_api_key_here
 CLAUDE_MODEL=claude-opus-4-5-20251101
 MAX_TOKENS=4096
 ```
+
+**Option C: Use Local Config (For Keeping Keys in Repo)**
+
+If you want to keep your API key in the repository (e.g., private repo), create `.env.local`:
+```bash
+# .env.local (gitignored)
+ANTHROPIC_API_KEY=your_actual_api_key_here
+```
+
+The app will read from `.env.local` first, then fall back to `.env`. This file is gitignored, so your key stays safe even if you accidentally commit.
 
 ### 5. Initialize Your Resume
 
