@@ -146,7 +146,7 @@ def tailor(job_description, output, no_optimize, preview):
         if output:
             output_name = output
         else:
-            output_name = "AneeshSaba"
+            output_name = "Aneesh_Saba_Resume"
 
         # Optimize to one page or just compile
         if no_optimize:
@@ -178,6 +178,11 @@ def tailor(job_description, output, no_optimize, preview):
         # Move PDF to Downloads folder
         downloads_folder = get_downloads_folder()
         downloads_path = downloads_folder / f"{output_name}.pdf"
+
+        # Delete existing file to prevent (1), (2) suffixes
+        if downloads_path.exists():
+            downloads_path.unlink()
+
         shutil.move(str(pdf_path), str(downloads_path))
 
         # Success!

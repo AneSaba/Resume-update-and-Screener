@@ -108,7 +108,7 @@ with col2:
                 progress_placeholder.progress(0.5)
 
                 # Generate PDF
-                output_name = "AneeshSaba"
+                output_name = "Aneesh_Saba_Resume"
 
                 if skip_optimize:
                     with status_placeholder.container():
@@ -134,8 +134,13 @@ with col2:
 
                 # Move to Downloads folder (don't keep in project)
                 downloads_folder = get_downloads_folder()
-                final_filename = "AneeshSaba.pdf"
+                final_filename = "Aneesh_Saba_Resume.pdf"
                 downloads_path = downloads_folder / final_filename
+
+                # Delete existing file to prevent (1), (2) suffixes
+                if downloads_path.exists():
+                    downloads_path.unlink()
+
                 shutil.move(str(pdf_path), str(downloads_path))
 
                 # Success!
