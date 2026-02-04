@@ -1,5 +1,6 @@
 """Main CLI application for resume tailoring."""
 import sys
+import shutil
 from pathlib import Path
 from datetime import datetime
 
@@ -12,6 +13,15 @@ from src.models.resume import ResumeData
 from src.services.claude_service import ClaudeService, ClaudeAPIError
 from src.services.latex_service import LaTeXService, LaTeXCompilationError
 from src.services.optimizer_service import PageOptimizer, OptimizationError
+
+
+def get_downloads_folder():
+    """Get the user's Downloads folder path."""
+    home = Path.home()
+    downloads = home / "Downloads"
+    if not downloads.exists():
+        downloads.mkdir(parents=True, exist_ok=True)
+    return downloads
 
 
 @click.group()
@@ -165,15 +175,20 @@ def tailor(job_description, output, no_optimize, preview):
                 click.echo(click.style(f"\nOptimization error: {e}", fg="red"))
                 sys.exit(1)
 
+        # Move PDF to Downloads folder
+        downloads_folder = get_downloads_folder()
+        downloads_path = downloads_folder / f"{output_name}.pdf"
+        shutil.move(str(pdf_path), str(downloads_path))
+
         # Success!
         click.echo(click.style("\n✓ Resume generated successfully!", fg="green", bold=True))
-        click.echo(f"\nOutput saved to: {click.style(str(pdf_path), fg='cyan')}")
+        click.echo(f"\nPDF saved to: {click.style(str(downloads_path), fg='cyan')}")
         click.echo(f"LaTeX source: {click.style(str(latex_service.generated_dir / f'{output_name}.tex'), fg='cyan')}")
 
         # Open PDF (macOS)
         if click.confirm("\nWould you like to open the PDF?", default=True):
             import subprocess
-            subprocess.run(["open", str(pdf_path)])
+            subprocess.run(["open", str(downloads_path)])
 
     except KeyboardInterrupt:
         click.echo(click.style("\n\nOperation cancelled by user", fg="yellow"))

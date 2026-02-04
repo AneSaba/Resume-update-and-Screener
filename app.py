@@ -132,19 +132,19 @@ with col2:
 
                 progress_placeholder.progress(1.0)
 
-                # Copy to Downloads folder
+                # Move to Downloads folder (don't keep in project)
                 downloads_folder = get_downloads_folder()
                 final_filename = "AneeshSaba.pdf"
                 downloads_path = downloads_folder / final_filename
-                shutil.copy(pdf_path, downloads_path)
+                shutil.move(str(pdf_path), str(downloads_path))
 
                 # Success!
                 with status_placeholder.container():
                     st.success(f"✅ Resume generated successfully! ({page_count} page{'s' if page_count != 1 else ''})")
-                    st.success(f"💾 Saved to Downloads: `{final_filename}`")
+                    st.success(f"💾 Saved to Downloads: `{downloads_path}`")
 
                 # Download button (for backup/alternative download)
-                with open(pdf_path, 'rb') as pdf_file:
+                with open(downloads_path, 'rb') as pdf_file:
                     st.download_button(
                         label="⬇️ Download Resume PDF",
                         data=pdf_file,
@@ -152,9 +152,6 @@ with col2:
                         mime="application/pdf",
                         use_container_width=True
                     )
-
-                # Show preview info
-                st.info(f"📁 Also saved in project: `{pdf_path}`")
 
             except ClaudeAPIError as e:
                 with status_placeholder.container():
