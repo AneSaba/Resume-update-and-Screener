@@ -136,8 +136,7 @@ def tailor(job_description, output, no_optimize, preview):
         if output:
             output_name = output
         else:
-            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-            output_name = f"resume_{timestamp}"
+            output_name = "AneeshSaba"
 
         # Optimize to one page or just compile
         if no_optimize:

@@ -108,8 +108,7 @@ with col2:
                 progress_placeholder.progress(0.5)
 
                 # Generate PDF
-                timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-                output_name = f"resume_{timestamp}"
+                output_name = "AneeshSaba"
 
                 if skip_optimize:
                     with status_placeholder.container():
@@ -135,7 +134,7 @@ with col2:
 
                 # Copy to Downloads folder
                 downloads_folder = get_downloads_folder()
-                final_filename = f"resume_tailored_{timestamp}.pdf"
+                final_filename = "AneeshSaba.pdf"
                 downloads_path = downloads_folder / final_filename
                 shutil.copy(pdf_path, downloads_path)
 
