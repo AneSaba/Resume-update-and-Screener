@@ -68,13 +68,16 @@ Instructions:
    - Include ALL work experiences from the original resume (do not remove any)
    - Each experience entry should have {max_bullets_per_job} bullet points maximum
    - Include maximum {max_projects} projects (prioritize most relevant)
-   - Each bullet point MUST be a single line (aim for 90-110 characters max)
-   - Pack maximum information into each bullet - be dense and precise, not verbose
-   - Use XYZ format: "Accomplished [X] as measured by [Y] by doing [Z]"
-   - Start with action verb, include specific metric, explain method
-   - Example: "Reduced \\textbf{{API}} latency \\textbf{{40%}} by optimizing \\textbf{{database queries}} with \\textbf{{indexing}}"
-   - Use strong action verbs and quantify ALL achievements with specific metrics
-   - Eliminate filler words - every word should add value
+   - Each bullet point MUST fit on a single line - TARGET 75-95 characters (count ONLY text, not LaTeX markup)
+   - Pack maximum information: action verb + metric + HOW you did it (method/technologies used)
+   - ALWAYS use complete XYZ format: "Accomplished [X] as measured by [Y] by doing [Z]"
+   - The METHOD (Z part) is REQUIRED - never omit the "how" or technologies used
+   - CRITICAL: Add spaces around metrics and symbols (e.g., "3× at" not "3×at", "40% by" not "40%by")
+   - Example GOOD (95 chars of text): "Reduced \\textbf{{API}} latency \\textbf{{40%}} by optimizing \\textbf{{queries}} with \\textbf{{indexing}} and \\textbf{{caching}}"
+   - Example TOO SHORT (55 chars): "Reduced \\textbf{{API}} latency \\textbf{{40%}} via optimization" - WRONG, missing details
+   - If bullet exceeds 95 chars of visible text, use shorter synonyms: "via" instead of "by doing", abbreviate where natural
+   - Use strong action verbs, quantify ALL achievements, and include specific technologies/methods used
+   - More technical keywords naturally included = better ATS performance
 
 5. Optimization for 1-page format:
    - Write CONCISE single-line bullets to maximize information density
@@ -227,11 +230,14 @@ Current Resume Data (in JSON format):
 Instructions:
 1. Reduce the content while preserving the most impactful information
 2. Strategies to use (in order of preference):
-   - Compress bullets to single lines (90-110 chars max) using XYZ format without losing metrics
-   - Use XYZ format: "Accomplished [X] as measured by [Y] by doing [Z]"
+   - Compress bullets to single lines (TARGET 75-95 chars of visible text to avoid wrapping) with XYZ format keeping all metrics
+   - ALWAYS use complete XYZ format: "Accomplished [X] as measured by [Y] by doing [Z]"
+   - NEVER omit the method/technology (the Z part) - it contains critical keywords
+   - CRITICAL: Add spaces around metrics and symbols (e.g., "3× at" not "3×at")
+   - Use shorter synonyms: "via" instead of "by doing", abbreviate naturally where possible
    - Remove least impactful projects (keep top 2 most impressive)
    - Reduce bullet points for OLDER positions only (keep 4-6 bullets for recent roles)
-   - Eliminate redundant words while preserving all specific achievements and numbers
+   - Compress wording but preserve all technical details, numbers, and keywords
    - Consolidate similar skills in the skills section
    - For positions before 2023, keep fewer details
 
