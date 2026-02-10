@@ -18,12 +18,23 @@ class ClaudeAPIError(Exception):
 class ClaudeService:
     """Service for interacting with Claude API to tailor resumes."""
 
-    TAILORING_PROMPT_TEMPLATE = """You are an expert resume writer and ATS optimization specialist. Your task is to tailor a resume to match a specific job description while maintaining factual accuracy.
+    TAILORING_PROMPT_TEMPLATE = """⚠️⚠️⚠️ CRITICAL RULES - READ FIRST ⚠️⚠️⚠️
+
+RULE 1 - SPACING (check EVERY bullet before submitting):
+- MUST add space after symbols: "3× at" NOT "3×at", "70% by" NOT "70%by", "2× via" NOT "2×via"
+
+RULE 2 - BULLET LENGTH (ABSOLUTE MAXIMUM 90 chars of visible text):
+- Count ONLY visible text (ignore \\textbf{{}})
+- If approaching 85+ chars, STOP and shorten
+- TOO LONG (105): "Built backend infrastructure for multi-tenant analytics platform serving 200K+ users using Python and Go"
+- FIXED (78): "Built \\textbf{{backend infra}} for \\textbf{{multi-tenant}} platform w/ \\textbf{{Python}} and \\textbf{{Go}}"
+
+You are an expert resume writer and ATS optimization specialist. Tailor this resume to match the job description while maintaining factual accuracy.
 
 Job Description:
 {job_description}
 
-Current Resume Data (in JSON format):
+Current Resume Data (JSON):
 {resume_json}
 
 Instructions:
@@ -52,14 +63,33 @@ Instructions:
    - For percents in bold: \\textbf{{25%}} - note the TWO backslashes before textbf
    - Maximize keyword density without fabricating experience
 
-3. Keyword Strategy:
-   - Extract ALL technical keywords from JD: languages, frameworks, tools, methodologies
-   - Map each JD keyword to resume content where genuinely applicable
-   - In Technical Skills: reorder to put JD-matching skills FIRST, add any missing but truthful skills
-   - In bullets: weave in JD keywords naturally - if you used a tool, name it explicitly
-   - Use exact JD phrasing: if JD says "CI/CD pipelines" use that, not just "CI/CD"
+3. Keyword Strategy - SYSTEMATIC EXTRACTION:
+   Step 1: EXTRACT from JD (read JD line by line):
+   - ALL single-word technical terms: languages (Python, Java), frameworks (React, Spring Boot), tools (Docker, Redis)
+   - ALL multi-word phrases: "distributed systems", "architectural trade-offs", "design patterns", "technical leadership"
+   - ALL compound technical terms: "synchronous and asynchronous design patterns", "distributed transaction management", "database architecture"
+   - ALL methodologies and practices: "best engineering practices", "code review", "unit tested", "continuous integration"
+   - ALL soft skills with exact phrasing: if JD says "technical leadership" use that, not "led team"
+   - ALL operational terms: "24x7", "high-volume", "large scale", "reliable", "speediness and quality"
+   - ALL domain-specific protocols/standards: "TCP/IP", "REST APIs", "relational databases"
+
+   Step 2: MAP to resume content:
+   - For EACH keyword/phrase extracted, identify where in resume it genuinely applies
+   - If keyword describes something you did, substitute the JD's exact terminology
+   - Examples of mappings:
+     * "monitoring" → use JD term "engineering productivity" if that's what JD emphasizes
+     * "design decisions" → use "architectural trade-offs" if JD uses that phrase
+     * "async processing" → use "synchronous and asynchronous design patterns" if applicable
+     * "database work" → use "relational databases" and "database architecture" if truthful
+     * "always available" → use "operate 24x7" if JD uses that phrasing
+
+   Step 3: INCORPORATE systematically:
+   - Technical Skills section: List JD keywords FIRST, then others
+   - Each bullet: aim for 3-5 JD keywords per bullet (not just 2-3)
+   - Use exact multi-word phrases from JD, not paraphrases
    - Bold EVERY keyword that matches between resume and JD
-   - Aim for 70-90% keyword coverage from JD in final resume
+   - For each experience bullet, ask: "What keywords from JD list apply here?" and add them
+   - Target: 70-90% of JD keywords should appear somewhere in final resume
 
 4. Critical constraints:
    - NEVER fabricate or exaggerate information
@@ -68,14 +98,30 @@ Instructions:
    - Include ALL work experiences from the original resume (do not remove any)
    - Each experience entry should have {max_bullets_per_job} bullet points maximum
    - Include maximum {max_projects} projects (prioritize most relevant)
-   - Each bullet point MUST fit on a single line - TARGET 75-95 characters (count ONLY text, not LaTeX markup)
+
+   ⚠️ SPACING - CHECK EVERY BULLET ⚠️:
+   - MANDATORY: Add space after ALL symbols: "3× at" NOT "3×at", "40% by" NOT "40%by", "2× via" NOT "2×via"
+   - This is causing wrapping issues - check EVERY bullet before submitting
+
+   ⚠️ BULLET LENGTH - HARD LIMIT 90 CHARS ⚠️:
+   - ABSOLUTE MAXIMUM: 90 characters of visible text (count ONLY text, NOT LaTeX markup like \\textbf{{}})
+   - REQUIRED: After writing EACH bullet, manually count visible characters
+   - If approaching 85+ chars while writing, STOP and find shorter phrasing
+   - If exceeds 90 chars, MUST shorten using:
+     * Abbreviations: "w/" not "with", "via" not "by doing"
+     * Remove articles: delete "a/an/the" where natural
+     * Shorter synonyms: "apps" not "applications", "sync/async" not "synchronous/asynchronous"
+     * Combine terms: "multi-tier scalable" instead of "multi-tier scalable distributed"
+   - Example TOO LONG (107 chars): "Build and maintain large scale distributed systems for multi-tenant analytics platform serving 200K+ users"
+   - Example FIXED (85 chars): "Build \\textbf{{distributed systems}} for \\textbf{{multi-tenant}} platform serving \\textbf{{200K+ users}}"
+
+   CONTENT FORMAT:
    - Pack maximum information: action verb + metric + HOW you did it (method/technologies used)
    - ALWAYS use complete XYZ format: "Accomplished [X] as measured by [Y] by doing [Z]"
    - The METHOD (Z part) is REQUIRED - never omit the "how" or technologies used
-   - CRITICAL: Add spaces around metrics and symbols (e.g., "3× at" not "3×at", "40% by" not "40%by")
-   - Example GOOD (95 chars of text): "Reduced \\textbf{{API}} latency \\textbf{{40%}} by optimizing \\textbf{{queries}} with \\textbf{{indexing}} and \\textbf{{caching}}"
-   - Example TOO SHORT (55 chars): "Reduced \\textbf{{API}} latency \\textbf{{40%}} via optimization" - WRONG, missing details
-   - If bullet exceeds 95 chars of visible text, use shorter synonyms: "via" instead of "by doing", abbreviate where natural
+   - Example GOOD (88 chars): "Reduced \\textbf{{API}} latency \\textbf{{40%}} by optimizing \\textbf{{queries}} w/ \\textbf{{indexes}} and \\textbf{{caching}}"
+   - Example TOO LONG (100 chars): "Built distributed applications with synchronous/asynchronous design patterns for high-volume workloads" - WRONG, will wrap!
+   - Example FIXED (87 chars): "Built \\textbf{{distributed apps}} w/ \\textbf{{sync/async patterns}} for \\textbf{{high-volume}} workloads"
    - Use strong action verbs, quantify ALL achievements, and include specific technologies/methods used
    - More technical keywords naturally included = better ATS performance
 
@@ -222,26 +268,35 @@ Return the tailored resume data as valid JSON now:"""
         Raises:
             ClaudeAPIError: If API call fails
         """
-        prompt = f"""You are helping optimize a resume that is currently {current_pages} pages long to fit on {target_pages} page(s).
+        prompt = f"""⚠️⚠️⚠️ CRITICAL RULES - READ FIRST ⚠️⚠️⚠️
 
-Current Resume Data (in JSON format):
+RULE 1 - SPACING (check EVERY bullet):
+- MUST add space after symbols: "3× at" NOT "3×at", "70% by" NOT "70%by"
+
+RULE 2 - BULLET LENGTH (ABSOLUTE MAXIMUM 85 chars):
+- Count ONLY visible text (ignore \\textbf{{}})
+- If > 85 chars: abbreviate, remove articles, use shorter words
+- TOO LONG (105): "Built backend infrastructure for multi-tenant analytics platform serving 200K+ users using Python and Go"
+- FIXED (78): "Built \\textbf{{backend infra}} for \\textbf{{multi-tenant}} platform w/ \\textbf{{Python}} and \\textbf{{Go}}"
+
+You are optimizing a resume from {current_pages} pages to {target_pages} page(s).
+
+Resume Data (JSON):
 {json.dumps(resume_data.to_dict(), indent=2)}
 
-Instructions:
-1. Reduce the content while preserving the most impactful information
-2. Strategies to use (in order of preference):
-   - Compress bullets to single lines (TARGET 75-95 chars of visible text to avoid wrapping) with XYZ format keeping all metrics
+3. Strategies to use (in order of preference):
+   - Compress bullets to single lines with XYZ format keeping all metrics
    - ALWAYS use complete XYZ format: "Accomplished [X] as measured by [Y] by doing [Z]"
    - NEVER omit the method/technology (the Z part) - it contains critical keywords
    - CRITICAL: Add spaces around metrics and symbols (e.g., "3× at" not "3×at")
-   - Use shorter synonyms: "via" instead of "by doing", abbreviate naturally where possible
+   - Use shorter synonyms: "via" not "by doing", "w/" not "with", abbreviate naturally
    - Remove least impactful projects (keep top 2 most impressive)
    - Reduce bullet points for OLDER positions only (keep 4-6 bullets for recent roles)
    - Compress wording but preserve all technical details, numbers, and keywords
    - Consolidate similar skills in the skills section
    - For positions before 2023, keep fewer details
 
-3. Maintain:
+4. Maintain:
    - All factual accuracy
    - Most impressive achievements and quantified results
    - Recent and relevant experience in full detail
@@ -252,7 +307,7 @@ Instructions:
    - Example: \\textbf{{MongoDB}} or \\textbf{{25%}} - always TWO backslashes
    - Compress wording but preserve every technical keyword
 
-4. Return ONLY valid JSON matching the input structure.
+5. Return ONLY valid JSON matching the input structure.
 
 Return the optimized resume data as valid JSON now:"""
 
