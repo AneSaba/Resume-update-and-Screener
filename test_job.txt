@@ -1,0 +1,27 @@
+Backend Software Engineer
+
+We're looking for a Backend Software Engineer to join our team and build scalable systems that power our product.
+
+Requirements:
+- 2+ years of experience with Java and Spring Boot
+- Strong knowledge of NoSQL databases (MongoDB) and caching (Redis)
+- Experience building and deploying microservices
+- Proficiency with CI/CD pipelines and containerization (Docker, Kubernetes)
+- Familiarity with monitoring tools like Datadog
+- Experience with message queues (Kafka)
+- Strong understanding of REST API design
+- Experience with cloud platforms (AWS or GCP)
+
+Nice to have:
+- Experience with AI/ML integration
+- Knowledge of data pipelines and ETL processes
+- Python or other scripting languages
+- Agile/Scrum development experience
+
+Responsibilities:
+- Design and implement backend services and APIs
+- Optimize database performance and queries
+- Build and maintain CI/CD pipelines
+- Collaborate with cross-functional teams
+- Monitor and improve system performance
+- Participate in code reviews and technical discussions

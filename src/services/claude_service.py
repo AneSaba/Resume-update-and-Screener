@@ -29,6 +29,13 @@ RULE 2 - BULLET LENGTH (ABSOLUTE MAXIMUM 90 chars of visible text):
 - TOO LONG (105): "Built backend infrastructure for multi-tenant analytics platform serving 200K+ users using Python and Go"
 - FIXED (78): "Built \\textbf{{backend infra}} for \\textbf{{multi-tenant}} platform w/ \\textbf{{Python}} and \\textbf{{Go}}"
 
+RULE 3 - LaTeX SYNTAX (CRITICAL - check before submitting):
+- EVERY \\textbf{{ MUST have matching closing }}
+- Check: count opening {{ and closing }} - must be EQUAL
+- WRONG: "Built \\textbf{{Python services" (missing }})
+- CORRECT: "Built \\textbf{{Python}} services"
+- In JSON strings, use double backslash: \\textbf NOT \textbf (single \t becomes tab!)
+
 You are an expert resume writer and ATS optimization specialist. Tailor this resume to match the job description while maintaining factual accuracy.
 
 Job Description:
@@ -278,6 +285,13 @@ RULE 2 - BULLET LENGTH (ABSOLUTE MAXIMUM 85 chars):
 - If > 85 chars: abbreviate, remove articles, use shorter words
 - TOO LONG (105): "Built backend infrastructure for multi-tenant analytics platform serving 200K+ users using Python and Go"
 - FIXED (78): "Built \\textbf{{backend infra}} for \\textbf{{multi-tenant}} platform w/ \\textbf{{Python}} and \\textbf{{Go}}"
+
+RULE 3 - LaTeX SYNTAX (CRITICAL - check before submitting):
+- EVERY \\textbf{{ MUST have matching closing }}
+- Check: count opening {{ and closing }} - must be EQUAL
+- WRONG: "Built \\textbf{{Python services" (missing }})
+- CORRECT: "Built \\textbf{{Python}} services"
+- In JSON strings, use double backslash: \\textbf NOT \textbf (single \t becomes tab!)
 
 You are optimizing a resume from {current_pages} pages to {target_pages} page(s).
 

@@ -196,6 +196,41 @@ class LaTeXService:
 
         return template.render(**context)
 
+    def _validate_latex_braces(self, tex_content: str) -> None:
+        """
+        Validate that all braces are properly balanced in LaTeX content.
+
+        Args:
+            tex_content: LaTeX source code to validate
+
+        Raises:
+            LaTeXCompilationError: If braces are unbalanced
+        """
+        brace_count = 0
+        line_num = 1
+
+        for i, char in enumerate(tex_content):
+            if char == '\n':
+                line_num += 1
+            elif char == '{':
+                brace_count += 1
+            elif char == '}':
+                brace_count -= 1
+                if brace_count < 0:
+                    # More closing braces than opening
+                    context_start = max(0, i - 50)
+                    context_end = min(len(tex_content), i + 50)
+                    context = tex_content[context_start:context_end]
+                    raise LaTeXCompilationError(
+                        f"Unbalanced braces: extra closing brace at line {line_num}\n"
+                        f"Context: ...{context}..."
+                    )
+
+        if brace_count != 0:
+            raise LaTeXCompilationError(
+                f"Unbalanced braces: {brace_count} unclosed opening brace(s) in LaTeX content"
+            )
+
     def compile_latex(self, tex_content: str, output_name: str) -> Path:
         """
         Compile LaTeX content to PDF.
@@ -216,6 +251,9 @@ class LaTeXService:
                 "pdflatex is not installed or not in PATH. "
                 "Please install LaTeX (MacTeX for macOS: brew install --cask mactex)"
             )
+
+        # Validate brace balance before compilation
+        self._validate_latex_braces(tex_content)
 
         # Write .tex file
         tex_path = self.generated_dir / f"{output_name}.tex"
