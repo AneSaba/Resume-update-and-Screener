@@ -82,6 +82,16 @@ with col1:
     max_projects = st.slider("Max projects", 1, 3, 2)
     skip_optimize = st.checkbox("Skip 1-page optimization (faster)", value=False)
 
+    # Optional company name and date in filename
+    include_company_date = st.checkbox("Include company name and date in filename", value=False)
+    company_name = ""
+    if include_company_date:
+        company_name = st.text_input(
+            "Company name",
+            placeholder="e.g., Apple, Google, Microsoft",
+            help="Will be used in filename: Aneesh_Saba_Resume_CompanyName_MM_DD_YYYY.pdf"
+        )
+
 with col2:
     st.subheader("📊 Status")
     status_placeholder = st.empty()
@@ -107,8 +117,14 @@ with col2:
 
                 progress_placeholder.progress(0.5)
 
-                # Generate PDF
-                output_name = "Aneesh_Saba_Resume"
+                # Generate PDF with optional company name and date
+                if include_company_date and company_name.strip():
+                    today = datetime.now().strftime("%m_%d_%Y")
+                    # Clean company name (remove spaces and special chars)
+                    clean_company = company_name.strip().replace(" ", "_")
+                    output_name = f"Aneesh_Saba_Resume_{clean_company}_{today}"
+                else:
+                    output_name = "Aneesh_Saba_Resume"
 
                 if skip_optimize:
                     with status_placeholder.container():
@@ -134,7 +150,7 @@ with col2:
 
                 # Move to Downloads folder (don't keep in project)
                 downloads_folder = get_downloads_folder()
-                final_filename = "Aneesh_Saba_Resume.pdf"
+                final_filename = f"{output_name}.pdf"
                 downloads_path = downloads_folder / final_filename
 
                 # Delete existing file to prevent (1), (2) suffixes
