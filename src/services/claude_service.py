@@ -23,11 +23,14 @@ class ClaudeService:
 RULE 1 - SPACING (check EVERY bullet before submitting):
 - MUST add space after symbols: "3× at" NOT "3×at", "70% by" NOT "70%by", "2× via" NOT "2×via"
 
-RULE 2 - BULLET LENGTH (ABSOLUTE MAXIMUM 90 chars of visible text):
-- Count ONLY visible text (ignore \\textbf{{}})
-- If approaching 85+ chars, STOP and shorten
+RULE 2 - BULLET LENGTH (ABSOLUTE MAXIMUM 85 chars visible - COUNT AFTER REMOVING \\textbf):
+- Strip ALL \\textbf{{}} markup, then count remaining text - MUST be ≤85 chars
+- Example: "Built \\textbf{{Python}} services" → remove markup → "Built Python services" (21 chars) ✓
+- If ANY bullet exceeds 85 visible chars, you MUST shorten it before submitting
+- Target 75-82 chars to be safe - bullets at 83-85 are risky
 - TOO LONG (105): "Built backend infrastructure for multi-tenant analytics platform serving 200K+ users using Python and Go"
 - FIXED (78): "Built \\textbf{{backend infra}} for \\textbf{{multi-tenant}} platform w/ \\textbf{{Python}} and \\textbf{{Go}}"
+- EVEN BETTER (68): "Built \\textbf{{backend}} for \\textbf{{multi-tenant}} platform w/ \\textbf{{Python}}, \\textbf{{Go}}"
 
 RULE 3 - LaTeX SYNTAX (CRITICAL - check before submitting):
 - EVERY \\textbf{{ MUST have matching closing }}
@@ -280,11 +283,13 @@ Return the tailored resume data as valid JSON now:"""
 RULE 1 - SPACING (check EVERY bullet):
 - MUST add space after symbols: "3× at" NOT "3×at", "70% by" NOT "70%by"
 
-RULE 2 - BULLET LENGTH (ABSOLUTE MAXIMUM 85 chars):
-- Count ONLY visible text (ignore \\textbf{{}})
-- If > 85 chars: abbreviate, remove articles, use shorter words
+RULE 2 - BULLET LENGTH (ABSOLUTE MAXIMUM 80 chars visible - COUNT AFTER REMOVING \\textbf):
+- Strip ALL \\textbf{{}} markup, then count remaining text - MUST be ≤80 chars
+- Example: "Built \\textbf{{Python}} services" → remove markup → "Built Python services" (21 chars) ✓
+- If ANY bullet exceeds 80 visible chars, you MUST shorten it before submitting
+- Target 70-77 chars to be safe - bullets at 78-80 are risky
 - TOO LONG (105): "Built backend infrastructure for multi-tenant analytics platform serving 200K+ users using Python and Go"
-- FIXED (78): "Built \\textbf{{backend infra}} for \\textbf{{multi-tenant}} platform w/ \\textbf{{Python}} and \\textbf{{Go}}"
+- FIXED (68): "Built \\textbf{{backend}} for \\textbf{{multi-tenant}} platform w/ \\textbf{{Python}}, \\textbf{{Go}}"
 
 RULE 3 - LaTeX SYNTAX (CRITICAL - check before submitting):
 - EVERY \\textbf{{ MUST have matching closing }}
