@@ -23,15 +23,16 @@ class ClaudeService:
 RULE 1 - SPACING (check EVERY bullet before submitting):
 - MUST add space after symbols: "3× at" NOT "3×at", "70% by" NOT "70%by", "2× via" NOT "2×via"
 
-RULE 2 - BULLET LENGTH (ABSOLUTE MAXIMUM 80 chars visible - COUNT AFTER REMOVING \\textbf):
-- Strip ALL \\textbf{{}} markup, then count remaining text - MUST be ≤80 chars
+RULE 2 - BULLET LENGTH (ABSOLUTE MAXIMUM 75 chars visible - COUNT AFTER REMOVING \\textbf):
+- Strip ALL \\textbf{{}} markup, then count remaining text - MUST be ≤75 chars
 - Example: "Built \\textbf{{Python}} services" → remove markup → "Built Python services" (21 chars) ✓
-- If ANY bullet exceeds 80 visible chars, you MUST shorten it before submitting
-- Target 70-77 chars to be safe - bullets at 78-80 are HIGH RISK for wrapping
+- If ANY bullet exceeds 75 visible chars, you MUST shorten it before submitting
+- Target 65-72 chars to be safe - bullets at 73-75 are HIGH RISK for wrapping
 - TOO LONG (107): "Developed C++ Unreal Engine medical simulation for WHO deployed in 12 countries; improved frame stability 25%"
 - STILL TOO LONG (85): "Built backend infra for multi-tenant platform w/ Python and Go serving 200K+ users"
-- FIXED (77): "Built \\textbf{{backend}} for \\textbf{{multi-tenant}} platform w/ \\textbf{{Python}}, \\textbf{{Go}}"
-- BEST (68): "Developed \\textbf{{C++}} modules for WHO simulation in \\textbf{{12 countries}}"
+- STILL TOO LONG (77): "Built backend for multi-tenant platform w/ Python, Go"
+- FIXED (68): "Built \\textbf{{backend}} for \\textbf{{multi-tenant}} w/ \\textbf{{Python}}, \\textbf{{Go}}"
+- BEST (62): "Developed \\textbf{{C++}} modules for WHO \\textbf{{simulation}}"
 
 RULE 3 - LaTeX SYNTAX (CRITICAL - check before submitting):
 - EVERY \\textbf{{ MUST have matching closing }}
@@ -114,17 +115,17 @@ Instructions:
    - MANDATORY: Add space after ALL symbols: "3× at" NOT "3×at", "40% by" NOT "40%by", "2× via" NOT "2×via"
    - This is causing wrapping issues - check EVERY bullet before submitting
 
-   ⚠️ BULLET LENGTH - HARD LIMIT 80 CHARS ⚠️:
-   - ABSOLUTE MAXIMUM: 80 characters of visible text (count ONLY text, NOT LaTeX markup like \\textbf{{}})
+   ⚠️ BULLET LENGTH - HARD LIMIT 75 CHARS ⚠️:
+   - ABSOLUTE MAXIMUM: 75 characters of visible text (count ONLY text, NOT LaTeX markup like \\textbf{{}})
    - REQUIRED: After writing EACH bullet, manually count visible characters
-   - If approaching 75+ chars while writing, STOP and find shorter phrasing
-   - If exceeds 80 chars, MUST shorten using:
+   - If approaching 70+ chars while writing, STOP and find shorter phrasing
+   - If exceeds 75 chars, MUST shorten using:
      * Abbreviations: "w/" not "with", "via" not "by doing"
      * Remove articles: delete "a/an/the" where natural
      * Shorter synonyms: "apps" not "applications", "sync/async" not "synchronous/asynchronous"
      * Combine terms: "multi-tier scalable" instead of "multi-tier scalable distributed"
    - Example TOO LONG (107 chars): "Build and maintain large scale distributed systems for multi-tenant analytics platform serving 200K+ users"
-   - Example FIXED (76 chars): "Build \\textbf{{distributed systems}} for \\textbf{{multi-tenant}} w/ \\textbf{{200K+ users}}"
+   - Example FIXED (68 chars): "Build \\textbf{{distributed systems}} for \\textbf{{multi-tenant}} w/ \\textbf{{200K+ users}}"
 
    CONTENT FORMAT:
    - Pack maximum information: action verb + metric + HOW you did it (method/technologies used)
@@ -284,14 +285,14 @@ Return the tailored resume data as valid JSON now:"""
 RULE 1 - SPACING (check EVERY bullet):
 - MUST add space after symbols: "3× at" NOT "3×at", "70% by" NOT "70%by"
 
-RULE 2 - BULLET LENGTH (ABSOLUTE MAXIMUM 75 chars visible - COUNT AFTER REMOVING \\textbf):
-- Strip ALL \\textbf{{}} markup, then count remaining text - MUST be ≤75 chars
+RULE 2 - BULLET LENGTH (ABSOLUTE MAXIMUM 70 chars visible - COUNT AFTER REMOVING \\textbf):
+- Strip ALL \\textbf{{}} markup, then count remaining text - MUST be ≤70 chars
 - Example: "Built \\textbf{{Python}} services" → remove markup → "Built Python services" (21 chars) ✓
-- If ANY bullet exceeds 75 visible chars, you MUST shorten it before submitting
-- Target 65-72 chars to be safe - bullets at 73-75 are risky
+- If ANY bullet exceeds 70 visible chars, you MUST shorten it before submitting
+- Target 60-67 chars to be safe - bullets at 68-70 are risky
 - TOO LONG (107): "Developed C++ Unreal Engine medical simulation for WHO deployed in 12 countries; improved frame stability 25%"
 - STILL TOO LONG (85): "Built backend infra for multi-tenant platform w/ Python and Go serving 200K+ users"
-- FIXED (68): "Built \\textbf{{backend}} for \\textbf{{multi-tenant}} platform w/ \\textbf{{Python}}, \\textbf{{Go}}"
+- FIXED (62): "Built \\textbf{{backend}} for \\textbf{{multi-tenant}} w/ \\textbf{{Python}}, \\textbf{{Go}}"
 
 RULE 3 - LaTeX SYNTAX (CRITICAL - check before submitting):
 - EVERY \\textbf{{ MUST have matching closing }}
