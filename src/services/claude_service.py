@@ -23,17 +23,14 @@ class ClaudeService:
 RULE 1 - SPACING (check EVERY bullet before submitting):
 - MUST add space after symbols: "3× at" NOT "3×at", "70% by" NOT "70%by", "2× via" NOT "2×via"
 
-RULE 2 - BULLET LENGTH (ABSOLUTE MAXIMUM 70 chars visible - COUNT AFTER REMOVING \\textbf):
-- Strip ALL \\textbf{{}} markup, then count remaining text - MUST be ≤70 chars
-- Example: "Built \\textbf{{Python}} services" → remove markup → "Built Python services" (21 chars) ✓
-- If ANY bullet exceeds 70 visible chars, you MUST shorten it before submitting
-- Target 60-67 chars to be safe - bullets at 68-70 are HIGH RISK for wrapping
-- TOO LONG (108): "Secured multi-tenant PII by implementing AWS KMS row-level encryption in REST APIs with HTTP GET/POST"
-- STILL TOO LONG (85): "Built backend infra for multi-tenant platform w/ Python and Go serving 200K+ users"
-- STILL TOO LONG (77): "Built backend for multi-tenant platform w/ Python, Go"
-- STILL TOO LONG (72): "Accelerated development 70% by integrating AI-assisted agents"
-- FIXED (65): "Secured PII via \\textbf{{encryption}} in \\textbf{{REST APIs}} w/ \\textbf{{AWS KMS}}"
-- BEST (58): "Built \\textbf{{backend}} for \\textbf{{multi-tenant}} w/ \\textbf{{Python}}"
+RULE 2 - BULLET LENGTH (TARGET 100-115 chars, MAX 120 chars - COUNT AFTER REMOVING \\textbf):
+- Strip ALL \\textbf{{}} markup, then count remaining text
+- TARGET: 100-115 characters for complete, detailed bullets with full context
+- Bullets shorter than 90 chars are TOO SHORT and missing critical details
+- If ANY bullet exceeds 120 visible chars, you MUST shorten it before submitting
+- EXCELLENT (118): "Built \\textbf{{backend infrastructure}} for \\textbf{{multi-tenant analytics platform}} serving \\textbf{{200K+ users}} using \\textbf{{Python}} and \\textbf{{Go}}"
+- EXCELLENT (112): "Optimized \\textbf{{MongoDB database queries}} and \\textbf{{indexes}}, improving \\textbf{{API latency}} by \\textbf{{40%}} for \\textbf{{high-volume}} workloads"
+- TOO SHORT (70): "Built \\textbf{{backend services}} for \\textbf{{multi-tenant platform}} w/ \\textbf{{Python}}" - MISSING how it was built and what technologies!
 
 RULE 3 - LaTeX SYNTAX (CRITICAL - check before submitting):
 - EVERY \\textbf{{ MUST have matching closing }}
@@ -116,36 +113,36 @@ Instructions:
    - MANDATORY: Add space after ALL symbols: "3× at" NOT "3×at", "40% by" NOT "40%by", "2× via" NOT "2×via"
    - This is causing wrapping issues - check EVERY bullet before submitting
 
-   ⚠️ BULLET LENGTH - HARD LIMIT 70 CHARS ⚠️:
-   - ABSOLUTE MAXIMUM: 70 characters of visible text (count ONLY text, NOT LaTeX markup like \\textbf{{}})
+   ⚠️ BULLET LENGTH - HARD LIMIT 120 CHARS ⚠️:
+   - ABSOLUTE MAXIMUM: 120 characters of visible text (count ONLY text, NOT LaTeX markup like \\textbf{{}})
    - REQUIRED: After writing EACH bullet, manually count visible characters
-   - If approaching 65+ chars while writing, STOP and find shorter phrasing
-   - If exceeds 70 chars, MUST shorten using:
+   - Target 100-115 chars for complete XYZ format with full context
+   - If exceeds 120 chars, MUST shorten using:
      * Abbreviations: "w/" not "with", "via" not "by doing"
      * Remove articles: delete "a/an/the" where natural
-     * Shorter synonyms: "apps" not "applications", "sync/async" not "synchronous/asynchronous"
-     * Combine terms: "multi-tier scalable" instead of "multi-tier scalable distributed"
-   - Example TOO LONG (108 chars): "Secured multi-tenant PII by implementing AWS KMS row-level encryption in REST APIs with HTTP GET/POST"
-   - Example STILL TOO LONG (85 chars): "Build and maintain large scale distributed systems for multi-tenant analytics platform"
-   - Example FIXED (65 chars): "Secured PII via \\textbf{{encryption}} in \\textbf{{REST APIs}} w/ \\textbf{{AWS KMS}}"
-   - Example BEST (58 chars): "Build \\textbf{{distributed systems}} for \\textbf{{multi-tenant}} w/ \\textbf{{Python}}"
+     * Shorter synonyms: "apps" not "applications", but keep full technical terms
+     * Combine related concepts: "multi-tier scalable architecture" instead of "multi-tier, scalable, distributed architecture"
+   - Example GOOD (118): "Build and maintain \\textbf{{large-scale distributed systems}} for \\textbf{{multi-tenant analytics platform}} serving \\textbf{{200K+ users}}"
+   - Example EXCELLENT (115): "Reduced \\textbf{{API latency}} by \\textbf{{40%}} through \\textbf{{query optimization}}, \\textbf{{caching}}, and \\textbf{{database indexing}}"
 
    CONTENT FORMAT:
    - Pack maximum information: action verb + metric + HOW you did it (method/technologies used)
    - ALWAYS use complete XYZ format: "Accomplished [X] as measured by [Y] by doing [Z]"
    - The METHOD (Z part) is REQUIRED - never omit the "how" or technologies used
-   - Example GOOD (88 chars): "Reduced \\textbf{{API}} latency \\textbf{{40%}} by optimizing \\textbf{{queries}} w/ \\textbf{{indexes}} and \\textbf{{caching}}"
-   - Example TOO LONG (100 chars): "Built distributed applications with synchronous/asynchronous design patterns for high-volume workloads" - WRONG, will wrap!
-   - Example FIXED (87 chars): "Built \\textbf{{distributed apps}} w/ \\textbf{{sync/async patterns}} for \\textbf{{high-volume}} workloads"
+   - Example EXCELLENT (115): "Reduced \\textbf{{API latency}} by \\textbf{{40%}} through \\textbf{{query optimization}}, \\textbf{{database indexing}}, and \\textbf{{Redis caching}}"
+   - Example GOOD (118): "Built \\textbf{{distributed applications}} with \\textbf{{synchronous and asynchronous design patterns}} for \\textbf{{high-volume workloads}}"
+   - Example GREAT (108): "Architected \\textbf{{microservices}} using \\textbf{{Spring Boot}} and \\textbf{{Kafka}}, serving \\textbf{{1M+ requests/day}} with \\textbf{{99.9% uptime}}"
    - Use strong action verbs, quantify ALL achievements, and include specific technologies/methods used
    - More technical keywords naturally included = better ATS performance
 
 5. Optimization for 1-page format:
-   - Write CONCISE single-line bullets to maximize information density
-   - Use shorter phrasing but preserve ALL key details, metrics, AND keywords
-   - Recent positions (2024-2025) should have more bullets showing depth of experience
-   - Compress sentences: "Built X that achieved Y" not "Responsible for building X which resulted in Y"
-   - Keep all quantified achievements AND technical keywords - both are critical for ATS
+   - Write DETAILED single-line bullets (100-115 chars) to maximize information and keyword density
+   - Use complete sentences with FULL technical details, metrics, AND all relevant keywords
+   - Recent positions (2024-2025) should have 5-6 detailed bullets showing depth of experience
+   - ALWAYS include the complete method/technology (the "how"): "Built X achieving Y using Z technologies"
+   - Keep all quantified achievements AND maximize technical keywords - both are critical for ATS
+   - Do NOT over-abbreviate - "with" is fine, don't force "w/" if it makes bullet too short
+   - Aim for MAXIMUM detail within 120 char limit - use every character available
 
 6. Return format:
    - Return ONLY a valid JSON object matching the exact structure of the input
@@ -288,20 +285,18 @@ Return the tailored resume data as valid JSON now:"""
 RULE 1 - SPACING (check EVERY bullet):
 - MUST add space after symbols: "3× at" NOT "3×at", "70% by" NOT "70%by"
 
-RULE 2 - BULLET LENGTH (ABSOLUTE MAXIMUM 65 chars visible - COUNT AFTER REMOVING \\textbf):
-- Strip ALL \\textbf{{}} markup, then count remaining text - MUST be ≤65 chars
-- Example: "Built \\textbf{{Python}} services" → remove markup → "Built Python services" (21 chars) ✓
-- If ANY bullet exceeds 65 visible chars, you MUST shorten it before submitting
-- Target 55-62 chars to be safe - bullets at 63-65 are HIGH RISK for wrapping
-- TOO LONG (108): "Secured multi-tenant PII by implementing AWS KMS row-level encryption in REST APIs with HTTP GET/POST"
-- STILL TOO LONG (85): "Built backend infra for multi-tenant platform w/ Python and Go serving 200K+ users"
-- STILL TOO LONG (72): "Built backend for multi-tenant platform w/ Python, Go"
-- FIXED (65): "Secured PII via \\textbf{{encryption}} in \\textbf{{REST APIs}} w/ \\textbf{{AWS KMS}}"
-- BEST (58): "Built \\textbf{{backend}} for \\textbf{{multi-tenant}} w/ \\textbf{{Python}}"
+RULE 2 - BULLET LENGTH (TARGET 100-115 chars, MAX 120 chars - COUNT AFTER REMOVING \\textbf):
+- Strip ALL \\textbf{{}} markup, then count remaining text
+- TARGET: 100-115 characters for complete, detailed bullets with full context
+- Bullets shorter than 90 chars are TOO SHORT and missing critical details
+- If ANY bullet exceeds 120 visible chars, you MUST shorten it before submitting
+- EXCELLENT (118): "Built \\textbf{{backend infrastructure}} for \\textbf{{multi-tenant analytics platform}} serving \\textbf{{200K+ users}} using \\textbf{{Python}} and \\textbf{{Go}}"
+- EXCELLENT (112): "Optimized \\textbf{{MongoDB database queries}} and \\textbf{{indexes}}, improving \\textbf{{API latency}} by \\textbf{{40%}} for \\textbf{{high-volume}} workloads"
+- TOO SHORT (70): "Built \\textbf{{backend services}} for \\textbf{{multi-tenant platform}} w/ \\textbf{{Python}}" - MISSING technologies and methods!
 
 RULE 3 - LaTeX SYNTAX (CRITICAL - check before submitting):
 - EVERY \\textbf{{ MUST have matching closing }}
-- Check: opening {{ and closing }} - must be EQUAL
+- Check: count opening {{ and closing }} - must be EQUAL
 - WRONG: "Built \\textbf{{Python services" (missing }})
 - CORRECT: "Built \\textbf{{Python}} services"
 - In JSON strings, use double backslash: \\textbf NOT \textbf (single \t becomes tab!)
@@ -312,16 +307,17 @@ Resume Data (JSON):
 {json.dumps(resume_data.to_dict(), indent=2)}
 
 3. Strategies to use (in order of preference):
-   - Compress bullets to single lines with XYZ format keeping all metrics
-   - ALWAYS use complete XYZ format: "Accomplished [X] as measured by [Y] by doing [Z]"
+   - Write FULL detailed bullets (100-115 chars) in complete XYZ format with all metrics
+   - ALWAYS use complete XYZ format: "Accomplished [X] as measured by [Y] by doing [Z using specific technologies]"
    - NEVER omit the method/technology (the Z part) - it contains critical keywords
    - CRITICAL: Add spaces around metrics and symbols (e.g., "3× at" not "3×at")
-   - Use shorter synonyms: "via" not "by doing", "w/" not "with", abbreviate naturally
+   - Use natural language - avoid over-abbreviating (only use "w/" or "via" if needed to fit 120 char limit)
    - Remove least impactful projects (keep top 2 most impressive)
-   - Reduce bullet points for OLDER positions only (keep 4-6 bullets for recent roles)
-   - Compress wording but preserve all technical details, numbers, and keywords
+   - Reduce bullet points for OLDER positions only (keep 5-6 detailed bullets for recent roles)
+   - MAXIMIZE technical details, specific technologies, numbers, and keywords in each bullet
+   - Each bullet should use 100-115 of the 120 available characters
    - Consolidate similar skills in the skills section
-   - For positions before 2023, keep fewer details
+   - For positions before 2023, keep fewer bullets but each should still be detailed (100+ chars)
 
 4. Maintain:
    - All factual accuracy
