@@ -20,24 +20,49 @@ class ClaudeService:
 
     TAILORING_PROMPT_TEMPLATE = """⚠️⚠️⚠️ CRITICAL RULES - READ FIRST ⚠️⚠️⚠️
 
+🚨🚨🚨 BEFORE YOU SUBMIT: EVERY bullet MUST be 100-110 chars (after removing \\textbf markup) 🚨🚨🚨
+Bullets under 100 chars are TOO SHORT. Bullets over 110 chars WILL WRAP to 2 lines! This is MANDATORY.
+
 RULE 1 - SPACING (check EVERY bullet before submitting):
 - MUST add space after symbols: "3× at" NOT "3×at", "70% by" NOT "70%by", "2× via" NOT "2×via"
 
-RULE 2 - BULLET LENGTH (TARGET 100-115 chars, MAX 120 chars - COUNT AFTER REMOVING \\textbf):
-- Strip ALL \\textbf{{}} markup, then count remaining text
-- TARGET: 100-115 characters for complete, detailed bullets with full context
-- Bullets shorter than 90 chars are TOO SHORT and missing critical details
-- If ANY bullet exceeds 120 visible chars, you MUST shorten it before submitting
-- EXCELLENT (118): "Built \\textbf{{backend infrastructure}} for \\textbf{{multi-tenant analytics platform}} serving \\textbf{{200K+ users}} using \\textbf{{Python}} and \\textbf{{Go}}"
-- EXCELLENT (112): "Optimized \\textbf{{MongoDB database queries}} and \\textbf{{indexes}}, improving \\textbf{{API latency}} by \\textbf{{40%}} for \\textbf{{high-volume}} workloads"
-- TOO SHORT (70): "Built \\textbf{{backend services}} for \\textbf{{multi-tenant platform}} w/ \\textbf{{Python}}" - MISSING how it was built and what technologies!
+RULE 2 - BULLET LENGTH ⚠️ CRITICAL: 100-110 CHARS MAX - STRICT ENFORCEMENT ⚠️:
+- TARGET RANGE: 100-110 characters (after removing ALL \\textbf{{}} markup)
+- ABSOLUTE MAXIMUM: 110 characters - anything longer WILL WRAP and break formatting!
+- Count method: Remove all \\textbf{{}} tags, count what remains - MUST be 100-110 chars
+- CRITICAL: Bold text takes MORE SPACE - limit to MAX 4 bold sections per bullet
+- Before submitting: Manually COUNT EVERY BULLET - no bullet can exceed 110 chars!
+
+HOW TO COUNT (follow this exactly):
+1. Take your bullet text
+2. Remove all \\textbf{{}} markup completely
+3. Count remaining characters - MUST be 100-110, NO EXCEPTIONS!
+4. Count bold sections - MUST be MAX 4 per bullet (bold text takes more space!)
+
+EXAMPLES WITH ACTUAL COUNTS:
+- PERFECT (115): "Built \\textbf{{backend services}} for \\textbf{{multi-tenant}} platform using \\textbf{{Python}}, \\textbf{{REST APIs}} serving \\textbf{{200K+ users}}"
+  WITHOUT MARKUP: "Built backend services for multi-tenant platform using Python, REST APIs serving 200K+ users" = 110 chars ✓
+
+- PERFECT (112): "Optimized \\textbf{{MongoDB}} queries and \\textbf{{indexes}}, improving \\textbf{{API latency}} by \\textbf{{40%}} for \\textbf{{high-volume}} workloads"
+  WITHOUT MARKUP: "Optimized MongoDB queries and indexes, improving API latency by 40% for high-volume workloads" = 112 chars ✓
+
+- TOO LONG - REJECTED (124): "Build and maintain backend services for multi-tenant analytics platform using Python and REST APIs for 200K+ users"
+  COUNT: 124 chars - WRAPS TO 2 LINES! Must trim to 115!
+
+- FIXED (113): "Built \\textbf{{backend}} for \\textbf{{multi-tenant}} platform w/ \\textbf{{Python}}, \\textbf{{REST APIs}} serving \\textbf{{200K+ users}}"
+  WITHOUT MARKUP: "Built backend for multi-tenant platform w/ Python, REST APIs serving 200K+ users" = 113 chars ✓
 
 RULE 3 - LaTeX SYNTAX (CRITICAL - check before submitting):
-- EVERY \\textbf{{ MUST have matching closing }}
-- Check: count opening {{ and closing }} - must be EQUAL
-- WRONG: "Built \\textbf{{Python services" (missing }})
-- CORRECT: "Built \\textbf{{Python}} services"
-- In JSON strings, use double backslash: \\textbf NOT \textbf (single \t becomes tab!)
+- In JSON: Use double backslash before textbf, but SINGLE curly braces
+- CORRECT JSON format: use two backslashes, one opening brace, one closing brace
+- Do NOT escape the curly braces themselves - only the backslash
+- Every textbf opening brace must have matching closing brace
+
+MULTIPLICATION SYMBOLS (CRITICAL):
+- For "3x" or "2x" multipliers, write them as plain "3x" or "2x" (lowercase x)
+- Do NOT use LaTeX math mode or special symbols
+- CORRECT in JSON: "improved latency 3x at peak" or "cutting time 2x faster"
+- WRONG: Do not use dollar signs, backslashes, or times symbols
 
 You are an expert resume writer and ATS optimization specialist. Tailor this resume to match the job description while maintaining factual accuracy.
 
@@ -113,17 +138,18 @@ Instructions:
    - MANDATORY: Add space after ALL symbols: "3× at" NOT "3×at", "40% by" NOT "40%by", "2× via" NOT "2×via"
    - This is causing wrapping issues - check EVERY bullet before submitting
 
-   ⚠️ BULLET LENGTH - HARD LIMIT 120 CHARS ⚠️:
-   - ABSOLUTE MAXIMUM: 120 characters of visible text (count ONLY text, NOT LaTeX markup like \\textbf{{}})
-   - REQUIRED: After writing EACH bullet, manually count visible characters
-   - Target 100-115 chars for complete XYZ format with full context
-   - If exceeds 120 chars, MUST shorten using:
-     * Abbreviations: "w/" not "with", "via" not "by doing"
-     * Remove articles: delete "a/an/the" where natural
-     * Shorter synonyms: "apps" not "applications", but keep full technical terms
-     * Combine related concepts: "multi-tier scalable architecture" instead of "multi-tier, scalable, distributed architecture"
-   - Example GOOD (118): "Build and maintain \\textbf{{large-scale distributed systems}} for \\textbf{{multi-tenant analytics platform}} serving \\textbf{{200K+ users}}"
-   - Example EXCELLENT (115): "Reduced \\textbf{{API latency}} by \\textbf{{40%}} through \\textbf{{query optimization}}, \\textbf{{caching}}, and \\textbf{{database indexing}}"
+   ⚠️⚠️⚠️ BULLET LENGTH - STRICT: 100-110 CHARS MAX (NO WRAPPING!) ⚠️⚠️⚠️:
+   - REQUIRED MINIMUM: 100 characters (after removing \\textbf markup)
+   - OPTIMAL TARGET: 100-110 characters
+   - ABSOLUTE MAXIMUM: 110 characters - ANYTHING OVER 110 WILL WRAP TO 2 LINES!
+   - MAX 4 BOLD SECTIONS per bullet - more than 4 bold sections cause wrapping!
+   - CRITICAL: After writing EACH bullet, COUNT the visible characters (strip \\textbf{{}} first)
+   - IF ANY bullet is under 100 chars, ADD MORE DETAIL - more technologies, methods, context
+   - IF ANY bullet is over 110 chars, TRIM IT - use "w/" for "with", remove filler words
+   - Every bullet MUST fit on 1 line - wrapping breaks the format and wastes space
+   - Example PERFECT (115): "Built \\textbf{{backend services}} for \\textbf{{multi-tenant}} platform using \\textbf{{Python}}, \\textbf{{REST APIs}} serving \\textbf{{200K+ users}}"
+   - Example PERFECT (112): "Reduced \\textbf{{API latency}} by \\textbf{{40%}} through \\textbf{{query optimization}}, \\textbf{{caching}}, and \\textbf{{database indexing}}"
+   - Example TOO SHORT (75): "Built \\textbf{{backend}} for \\textbf{{platform}} serving \\textbf{{users}}" - REJECTED! Add technologies and methods!
 
    CONTENT FORMAT:
    - Pack maximum information: action verb + metric + HOW you did it (method/technologies used)
@@ -136,15 +162,26 @@ Instructions:
    - More technical keywords naturally included = better ATS performance
 
 5. Optimization for 1-page format:
-   - Write DETAILED single-line bullets (100-115 chars) to maximize information and keyword density
-   - Use complete sentences with FULL technical details, metrics, AND all relevant keywords
-   - Recent positions (2024-2025) should have 5-6 detailed bullets showing depth of experience
-   - ALWAYS include the complete method/technology (the "how"): "Built X achieving Y using Z technologies"
-   - Keep all quantified achievements AND maximize technical keywords - both are critical for ATS
-   - Do NOT over-abbreviate - "with" is fine, don't force "w/" if it makes bullet too short
-   - Aim for MAXIMUM detail within 120 char limit - use every character available
+   - ⚠️ EVERY BULLET: 105-115 CHARS MAX - MUST FIT ON 1 LINE ⚠️
+   - Write DETAILED bullets with technical stack and metrics - NO WRAPPING ALLOWED
+   - Recent positions (2024-2025): maximize bullets (5-6), EACH 105-110 chars exactly
+   - ALWAYS include complete XYZ format, but fit within 115 char limit
+   - If bullet exceeds 110 chars, TRIM using "w/" for "with", remove filler words
+   - Pack in multiple technologies: "\\textbf{{Python}}, \\textbf{{Django}}, \\textbf{{PostgreSQL}}, \\textbf{{Redis}}"
+   - If under 100 chars, ADD detail; if over 110 chars, TRIM immediately
+   - Target 110-110 chars - sweet spot for detail without wrapping
 
-6. Return format:
+6. MANDATORY PRE-SUBMISSION CHECK:
+   Before submitting your JSON response, you MUST verify EVERY bullet:
+   - For EACH bullet, mentally strip the \\textbf{{}} markup
+   - COUNT the remaining characters - MUST be 105-110 chars
+   - If under 100 chars: ADD technologies, methods, context
+   - If over 110 chars: TRIM using "w/" instead of "with", remove "and", cut filler
+   - Check that NO bullet exceeds 110 chars (anything over wraps!)
+   - Do NOT submit until ALL bullets are 100-110 characters
+   - This verification step is MANDATORY - wrapping breaks the 1-page format
+
+7. Return format:
    - Return ONLY a valid JSON object matching the exact structure of the input
    - Do not include any explanation or commentary
    - Ensure all required fields are present
@@ -282,24 +319,48 @@ Return the tailored resume data as valid JSON now:"""
         """
         prompt = f"""⚠️⚠️⚠️ CRITICAL RULES - READ FIRST ⚠️⚠️⚠️
 
+🚨🚨🚨 BEFORE YOU SUBMIT: EVERY bullet MUST be 105-110 chars (after removing \\textbf markup) 🚨🚨🚨
+Bullets under 100 chars are TOO SHORT. Bullets over 110 chars WILL WRAP to 2 lines! This is MANDATORY.
+
 RULE 1 - SPACING (check EVERY bullet):
 - MUST add space after symbols: "3× at" NOT "3×at", "70% by" NOT "70%by"
 
-RULE 2 - BULLET LENGTH (TARGET 100-115 chars, MAX 120 chars - COUNT AFTER REMOVING \\textbf):
-- Strip ALL \\textbf{{}} markup, then count remaining text
-- TARGET: 100-115 characters for complete, detailed bullets with full context
-- Bullets shorter than 90 chars are TOO SHORT and missing critical details
-- If ANY bullet exceeds 120 visible chars, you MUST shorten it before submitting
-- EXCELLENT (118): "Built \\textbf{{backend infrastructure}} for \\textbf{{multi-tenant analytics platform}} serving \\textbf{{200K+ users}} using \\textbf{{Python}} and \\textbf{{Go}}"
-- EXCELLENT (112): "Optimized \\textbf{{MongoDB database queries}} and \\textbf{{indexes}}, improving \\textbf{{API latency}} by \\textbf{{40%}} for \\textbf{{high-volume}} workloads"
-- TOO SHORT (70): "Built \\textbf{{backend services}} for \\textbf{{multi-tenant platform}} w/ \\textbf{{Python}}" - MISSING technologies and methods!
+RULE 2 - BULLET LENGTH ⚠️ CRITICAL: 105-115 CHARS MAX - STRICT ENFORCEMENT ⚠️:
+- TARGET RANGE: 100-110 characters (after removing ALL \\textbf{{}} markup)
+- ABSOLUTE MAXIMUM: 115 characters - anything longer WILL WRAP and break formatting!
+- Count method: Remove all \\textbf{{}} tags, count what remains - MUST be 105-110 chars
+- Before submitting: Manually COUNT EVERY BULLET - no bullet can exceed 110 chars!
+
+HOW TO COUNT (follow this exactly):
+1. Take your bullet text
+2. Remove all \\textbf{{}} markup completely
+3. Count remaining characters - MUST be 100-110, NO EXCEPTIONS!
+4. Count bold sections - MUST be MAX 4 per bullet (bold text takes more space!)
+
+EXAMPLES WITH ACTUAL COUNTS:
+- PERFECT (115): "Built \\textbf{{backend services}} for \\textbf{{multi-tenant}} platform using \\textbf{{Python}}, \\textbf{{REST APIs}} serving \\textbf{{200K+ users}}"
+  WITHOUT MARKUP: "Built backend services for multi-tenant platform using Python, REST APIs serving 200K+ users" = 110 chars ✓
+
+- PERFECT (112): "Optimized \\textbf{{MongoDB}} queries and \\textbf{{indexes}}, improving \\textbf{{API latency}} by \\textbf{{40%}} for \\textbf{{high-volume}} workloads"
+  WITHOUT MARKUP: "Optimized MongoDB queries and indexes, improving API latency by 40% for high-volume workloads" = 112 chars ✓
+
+- TOO LONG - REJECTED (124): "Build and maintain backend services for multi-tenant analytics platform using Python and REST APIs for 200K+ users"
+  COUNT: 124 chars - WRAPS TO 2 LINES! Must trim to 115!
+
+- FIXED (113): "Built \\textbf{{backend}} for \\textbf{{multi-tenant}} platform w/ \\textbf{{Python}}, \\textbf{{REST APIs}} serving \\textbf{{200K+ users}}"
+  WITHOUT MARKUP: "Built backend for multi-tenant platform w/ Python, REST APIs serving 200K+ users" = 113 chars ✓
 
 RULE 3 - LaTeX SYNTAX (CRITICAL - check before submitting):
-- EVERY \\textbf{{ MUST have matching closing }}
-- Check: count opening {{ and closing }} - must be EQUAL
-- WRONG: "Built \\textbf{{Python services" (missing }})
-- CORRECT: "Built \\textbf{{Python}} services"
-- In JSON strings, use double backslash: \\textbf NOT \textbf (single \t becomes tab!)
+- In JSON: Use double backslash before textbf, but SINGLE curly braces
+- CORRECT JSON format: use two backslashes, one opening brace, one closing brace
+- Do NOT escape the curly braces themselves - only the backslash
+- Every textbf opening brace must have matching closing brace
+
+MULTIPLICATION SYMBOLS (CRITICAL):
+- For "3x" or "2x" multipliers, write them as plain "3x" or "2x" (lowercase x)
+- Do NOT use LaTeX math mode or special symbols
+- CORRECT in JSON: "improved latency 3x at peak" or "cutting time 2x faster"
+- WRONG: Do not use dollar signs, backslashes, or times symbols
 
 You are optimizing a resume from {current_pages} pages to {target_pages} page(s).
 
@@ -307,17 +368,18 @@ Resume Data (JSON):
 {json.dumps(resume_data.to_dict(), indent=2)}
 
 3. Strategies to use (in order of preference):
-   - Write FULL detailed bullets (100-115 chars) in complete XYZ format with all metrics
-   - ALWAYS use complete XYZ format: "Accomplished [X] as measured by [Y] by doing [Z using specific technologies]"
-   - NEVER omit the method/technology (the Z part) - it contains critical keywords
-   - CRITICAL: Add spaces around metrics and symbols (e.g., "3× at" not "3×at")
-   - Use natural language - avoid over-abbreviating (only use "w/" or "via" if needed to fit 120 char limit)
+   - ⚠️ EVERY BULLET MUST BE 105-115 CHARS MAX - add detail if under 105, trim if over 115 ⚠️
+   - Write LONG, COMPLETE bullets with full XYZ format: "Accomplished [X] measured by [Y] using [Z: specific tech stack]"
+   - NEVER omit the method/technology (the Z part) - list multiple technologies per bullet
+   - Pack in technical keywords: "using \\textbf{{Python}}, \\textbf{{Django}}, \\textbf{{PostgreSQL}}, and \\textbf{{Redis}}"
+   - DO NOT abbreviate unless over 110 chars - spell out "with", "using", "through", etc.
    - Remove least impactful projects (keep top 2 most impressive)
-   - Reduce bullet points for OLDER positions only (keep 5-6 detailed bullets for recent roles)
-   - MAXIMIZE technical details, specific technologies, numbers, and keywords in each bullet
-   - Each bullet should use 100-115 of the 120 available characters
+   - Reduce bullet COUNT for older positions (keep 3-4), but each bullet still 105-110 chars
+   - Recent roles (2024-2025): 5-6 LONG bullets (105-110 chars each) showing depth
+   - If bullet is under 100 chars, ADD MORE: more technologies, more methods, more context
+   - If bullet exceeds 110 chars, it will WRAP to 2 lines - TRIM immediately
    - Consolidate similar skills in the skills section
-   - For positions before 2023, keep fewer bullets but each should still be detailed (100+ chars)
+   - EVERY bullet must be 105-110 chars - bullets over 115 will wrap and break format!
 
 4. Maintain:
    - All factual accuracy
@@ -328,9 +390,18 @@ Resume Data (JSON):
    - BOLD ALL key terms using \\textbf{{}} - MUST use TWO backslashes (single \t becomes tab!)
    - Bold technologies, frameworks, metrics, keywords, domain terms
    - Example: \\textbf{{MongoDB}} or \\textbf{{25%}} - always TWO backslashes
-   - Compress wording but preserve every technical keyword
+   - Add detail to preserve every technical keyword - DO NOT compress excessively
 
-5. Return ONLY valid JSON matching the input structure.
+5. MANDATORY PRE-SUBMISSION CHECK:
+   Before submitting your JSON response, you MUST verify EVERY bullet:
+   - For EACH bullet, mentally strip the \\textbf{{}} markup
+   - COUNT the remaining characters - MUST be 105-110 chars
+   - If ANY bullet is under 105 characters, GO BACK and add more detail
+   - If ANY bullet exceeds 115 characters, TRIM IT - it will wrap to 2 lines!
+   - Do NOT submit until ALL bullets are 100-110 characters exactly
+   - This verification step is MANDATORY - no exceptions
+
+6. Return ONLY valid JSON matching the input structure.
 
 Return the optimized resume data as valid JSON now:"""
 

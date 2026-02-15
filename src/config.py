@@ -12,10 +12,10 @@ class Settings(BaseSettings):
     # Anthropic API Configuration
     anthropic_api_key: str = Field(..., description="Anthropic API key")
     claude_model: str = Field(
-        default="claude-opus-4-5-20251101",
+        default="claude-opus-4-6",
         description="Claude model to use for resume tailoring"
     )
-    max_tokens: int = Field(default=4096, description="Maximum tokens for API calls")
+    max_tokens: int = Field(default=8192, description="Maximum tokens for API calls")
 
     # Project Paths
     project_root: Path = Field(
