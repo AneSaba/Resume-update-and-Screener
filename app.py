@@ -97,6 +97,64 @@ with col2:
     status_placeholder = st.empty()
     progress_placeholder = st.empty()
 
+    DEFAULT_CACHE = Path("output/default/Aneesh_Saba_Resume.pdf")
+
+    col_default, col_regen = st.columns([3, 1])
+    with col_default:
+        default_btn = st.button("📄 Generate Default Resume", use_container_width=True)
+    with col_regen:
+        regen_btn = st.button("🔄", help="Regenerate default (re-runs optimizer)", use_container_width=True)
+
+    if regen_btn and DEFAULT_CACHE.exists():
+        DEFAULT_CACHE.unlink()
+        st.rerun()
+
+    if default_btn:
+        try:
+            if DEFAULT_CACHE.exists():
+                with status_placeholder.container():
+                    st.info("📄 Using cached default resume...")
+                pdf_path = DEFAULT_CACHE
+                page_count = latex_service.count_pages(pdf_path)
+            else:
+                with status_placeholder.container():
+                    st.info("📄 Generating default resume (first time only)...")
+                progress_placeholder.progress(0.5)
+
+                _, pdf_path = optimizer.optimize_to_one_page(
+                    resume_data,
+                    "Aneesh_Saba_Resume",
+                    max_iterations=5,
+                    verbose=False
+                )
+                page_count = latex_service.count_pages(pdf_path)
+                shutil.copy(str(pdf_path), str(DEFAULT_CACHE))
+
+            progress_placeholder.progress(1.0)
+
+            downloads_folder = get_downloads_folder()
+            downloads_path = downloads_folder / "Aneesh_Saba_Resume.pdf"
+            if downloads_path.exists():
+                downloads_path.unlink()
+            shutil.copy(str(pdf_path), str(downloads_path))
+
+            with status_placeholder.container():
+                st.success(f"✅ Default resume ready! ({page_count} page{'s' if page_count != 1 else ''})")
+                st.success(f"💾 Saved to Downloads: `{downloads_path}`")
+
+            with open(downloads_path, 'rb') as pdf_file:
+                st.download_button(
+                    label="⬇️ Download Default Resume PDF",
+                    data=pdf_file,
+                    file_name="Aneesh_Saba_Resume.pdf",
+                    mime="application/pdf",
+                    use_container_width=True
+                )
+        except Exception as e:
+            with status_placeholder.container():
+                st.error(f"❌ Error: {e}")
+            progress_placeholder.empty()
+
     if st.button("🚀 Generate Tailored Resume", type="primary", use_container_width=True):
         if not job_description.strip():
             st.error("Please paste a job description first!")
