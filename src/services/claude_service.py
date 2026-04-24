@@ -135,6 +135,7 @@ Instructions:
 4. Critical constraints:
    - NEVER fabricate or exaggerate information
    - Maintain all factual details (dates, companies, degrees, etc.)
+   - NEVER modify the education section — copy it exactly as-is from the input JSON
    - Keep the same overall structure
    - Include ALL work experiences from the original resume (do not remove any)
    - Each experience entry should have {max_bullets_per_job} bullet points maximum
